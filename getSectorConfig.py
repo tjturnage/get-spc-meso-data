@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 ############################################################################
 # startDateTime: Date and time you want to start grabbing images for (yyyymmdd_hh)
 # endDateTime: Date and time you want to stop grabbing images for (inclusive [yyyymmdd_hh])
@@ -23,8 +21,8 @@
 #           ./getSectorData -key        
 ############################################################################
 
-#from turtle import down
 from datetime import datetime,timedelta
+from time import strftime
 
 startDateTime = "20220512_16"
 endDateTime = "20220513_04"
@@ -35,10 +33,12 @@ startDateTime = datetime.strptime(startDateTime,"%Y%m%d_%H")
 endDateTime = datetime.strptime(endDateTime,"%Y%m%d_%H")
 dateList = []
 while startDateTime <= endDateTime:
-    dateList.append(startDateTime)
+    dt_str = datetime.strftime(startDateTime,'%y%m%d%H')
+    #dateList.append(startDateTime)
+    dateList.append(dt_str)
     startDateTime = startDateTime + timedelta(hours=1)
 
-
+print(dateList)
 
 urlpre = f'https://www.spc.noaa.gov/exper/mesoanalysis/s{sector}'
 
@@ -104,7 +104,8 @@ download_groups = [surface, upper_air, thermodynamics, wind_shear, composite_ind
 for g in download_groups:
     for e in g:
         name = e[0]
-        print(f'{urlpre}/{name}/{name}_.gif')
+        for d in dateList:
+            print(f'{urlpre}/{name}/{name}_{d}.gif')
 
 
 descriptions = {'trap': '<div class="spc-prod">Fluid Trapping Parameter</div><div class="spc-info">In regions of strong vorticity \
