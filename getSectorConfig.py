@@ -13,6 +13,7 @@
 # 18: SE
 # 19: National
 # 20: MW
+# 21: Great Lakes
 # 
 # parmKeys: What parameters you'd like to download imagery for. Note that using
 #           the string "ALL" downloads all configured imagery. Including a comma delimited
@@ -38,7 +39,7 @@ while startDateTime <= endDateTime:
     dateList.append(dt_str)
     startDateTime = startDateTime + timedelta(hours=1)
 
-print(dateList)
+#print(dateList)
 
 urlpre = f'https://www.spc.noaa.gov/exper/mesoanalysis/s{sector}'
 
@@ -100,13 +101,15 @@ beta = [['sherbe', 'SHERBE'], ['moshe', 'Modified SHERBE'], ['cwasp', 'CWASP'],
 #download_groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields, heavy_rain, winter_weather, fire_weather, classic, beta]
 download_groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields] #, heavy_rain, winter_weather, fire_weather, classic, beta]
 
+ma_list = []
 #https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
 for g in download_groups:
     for e in g:
-        name = e[0]
-        for d in dateList:
-            print(f'{urlpre}/{name}/{name}_{d}.gif')
+        ma_list.append(e)
+        #for d in dateList:
+            #print(f'{urlpre}/{name}/{name}_{d}.gif')
 
+print(ma_list)
 
 descriptions = {'trap': '<div class="spc-prod">Fluid Trapping Parameter</div><div class="spc-info">In regions of strong vorticity \
     (i.e., cyclones), air parcels tend to become trapped within the vortex.  This can produce a boundary within which air \
@@ -807,68 +810,58 @@ descriptions = {'trap': '<div class="spc-prod">Fluid Trapping Parameter</div><di
 
     'lasi': 'No description',
 
+}
 
-    'ch01i': '<div class="sat-prod">Visible - CH01 (0.47 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band01.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch02i': '<div class="sat-prod">Visible - CH02 (0.64 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band02.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch03i': '<div class="sat-prod">Veggie Band - CH03 (0.86 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band03.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch04i': '<div class="sat-prod">Cirrus Band - CH04 (1.37 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band04.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch05i': '<div class="sat-prod">Snow/Ice Band - CH05 (1.61 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band05.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch06i': '<div class="sat-prod">Cloud Particle Size Band - CH06 (2.24 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band05.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch07i': '<div class="sat-prod">Shortwave (Near) IR Band - CH07 (3.9 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band05.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch08i': '<div class="sat-prod">Upper Level Water Vapor - CH08 (6.2 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band08.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch09i': '<div class="sat-prod">Mid Level Water Vapor - CH09 (6.9 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band09.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch10i': '<div class="sat-prod">Mid Level Water Vapor - CH10 (7.3 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band10.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch11i': '<div class="sat-prod">Infrared Cloud Phase - CH11 (8.5 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band11.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-    
-    'ch12i': '<div class="sat-prod">Ozone Band - CH12 (9.6 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band12.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch13i': '<div class="sat-prod">Clean Longwave Infrared Window - CH13 (10.3 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band13.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch14i': '<div class="sat-prod">Infrared Longwave Window - CH14 (11.2 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band14.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch15i': '<div class="sat-prod">Dirty Window Band - CH15 (12.3 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band15.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'ch16i': '<div class="sat-prod">CO2 Band - CH16 (13.3 um)</div><div class="sat-info">Click <a \
-    href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band16.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'geoci': '<div class="sat-prod">CIRA GeoColor RGB</div><div class="sat-info">Click <a \
-    href="https://rammb.cira.colostate.edu/training/visit/quick_guides/QuickGuide_CIRA_Geocolor_20171019.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'nmici': '<div class="sat-prod">Nighttime Microphysics RGB</div><div class="sat-info">Click <a \
-    href="https://rammb.cira.colostate.edu/training/visit/quick_guides/QuickGuide_GOESR_NtMicroRGB_Final_20191206.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'airmi': '<div class="sat-prod">Airmass RGB</div><div class="sat-info">Click <a \
-    href="https://rammb.cira.colostate.edu/training/visit/quick_guides/QuickGuide_GOESR_AirMassRGB_final.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'sandi': '<div class="sat-prod">Sandwich Product</div><div class="sat-info">Click <a \
-    href="https://www.star.nesdis.noaa.gov/goes/documents/SandwichProduct.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
-    'firti': '<div class="sat-prod">Fire Temperature RGB</div><div class="sat-info">Click <a \
-    href="https://rammb.cira.colostate.edu/training/visit/quick_guides/Fire_Temperature_RGB.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
-
+spcDict = {
+    # SATRAD
+    # 1:{"varDir":"1kmv","filePre":"vis_","title":"Visible Satellite","ymdFmt":"%Y%m%d_%H00"},
+    # 2:{"varDir":"rgnlrad","filePre":"rad_","title":"Radar","ymdFmt":"%Y%m%d_%H00"},
+    # SURFACE
+    3:{"varDir":"pmsl","filePre":"pmsl_","title":"MSLP and Wind","ymdFmt":"%y%m%d%H"},
+    4:{"varDir":"ttd","filePre":["ttd_sf_","ttd_"],"title":"MSLP, Wind, T and Td","ymdFmt":"%y%m%d%H"},
+    5:{"varDir":"thet","filePre":"thet_","title":"MSLP, Wind, Theta-E","ymdFmt":"%y%m%d%H"},
+    6:{"varDir":"pchg","filePre":"pchg_","title":"2hr Sfc Pres Chg","ymdFmt":"%y%m%d%H"},
+    7:{"varDir":"thte_chg","filePre":"thte_chg_","title":"3hr Theta-E Chg","ymdFmt":"%y%m%d%H"},
+    # UPPER AIR
+    8:{"varDir":"925mb","filePre":"925mb_","title":"925mb Analysis","ymdFmt":"%y%m%d%H"},
+    9:{"varDir":"850mb","filePre":"850mb_","title":"850mb Analysis","ymdFmt":"%y%m%d%H"},
+    10:{"varDir":"850mb2","filePre":"850mb2_","title":"850mb Analysis Version 2","ymdFmt":"%y%m%d%H"},
+    11:{"varDir":"700mb","filePre":"700mb_","title":"700mb Analysis","ymdFmt":"%y%m%d%H"},
+    12:{"varDir":"500mb","filePre":"500mb_","title":"500mb Analysis","ymdFmt":"%y%m%d%H"},
+    13:{"varDir":"300mb","filePre":"300mb_","title":"300mb Analysis","ymdFmt":"%y%m%d%H"},
+    14:{"varDir":"500mb_chg","filePre":"500mb_chg_","title":"12hr 500mb Height Change, Cur Height, Wind","ymdFmt":"%y%m%d%H"},
+    # THERMO
+    15:{"varDir":"sbcp","filePre":"sbcp_","title":"SBCAPE and SBCIN","ymdFmt":"%y%m%d%H"},
+    16:{"varDir":"mlcp","filePre":"mlcp_","title":"MLCAPE and MLCIN","ymdFmt":"%y%m%d%H"},
+    17:{"varDir":"mucp","filePre":"mucp_","title":"MUCAPE and Lifted Parcel Level","ymdFmt":"%y%m%d%H"},
+    18:{"varDir":"dcape","filePre":"dcape_","title":"DCAPE and DCIN","ymdFmt":"%y%m%d%H"},
+    19:{"varDir":"laps","filePre":"laps_","title":"700-500mb Lapse Rate","ymdFmt":"%y%m%d%H"},
+    20:{"varDir":"lllr","filePre":"lllr_","title":"0-3km Lapse Rate","ymdFmt":"%y%m%d%H"},
+    21:{"varDir":"lclh","filePre":"lclh_","title":"100 mb mean parcel LCL height","ymdFmt":"%y%m%d%H"},
+    # WIND SHEAR
+    22:{"varDir":"eshr","filePre":"eshr_","title":"Effective Bulk Shear","ymdFmt":"%y%m%d%H"},
+    23:{"varDir":"shr6","filePre":"shr6_","title":"Surface to 6km Shear","ymdFmt":"%y%m%d%H"},
+    24:{"varDir":"shr3","filePre":"shr3_","title":"Surface to 3km Shear","ymdFmt":"%y%m%d%H"},
+    25:{"varDir":"shr1","filePre":"shr1_","title":"Surface to 1km Shear","ymdFmt":"%y%m%d%H"},
+    26:{"varDir":"effh","filePre":"effh_","title":"Effective Layer SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
+    27:{"varDir":"srh1","filePre":"srh1_","title":"0-1km SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
+    28:{"varDir":"srh3","filePre":"srh3_","title":"0-3km SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
+    29:{"varDir":"srh5","filePre":"srh5_","title":"0-500m SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
+    30:{"varDir":"mnwd","filePre":"mnwd_","title":"850-300mb Mean Wind","ymdFmt":"%y%m%d%H"},
+    31:{"varDir":"alsr","filePre":"alsr_","title":"Anvil Level SR Wind","ymdFmt":"%y%m%d%H"},
+    32:{"varDir":"hodo","filePre":"hodo_","title":"RAP Hodographs","ymdFmt":"%y%m%d%H"},
+    # Multi-Parm Fields
+    33:{"varDir":"stor","filePre":"stor_","title":"Sig Tor Parm. (Fixed Layer)","ymdFmt":"%y%m%d%H"},
+    34:{"varDir":"stpc","filePre":"stpc_","title":"Sig Tor Parm. (Effective Layer)","ymdFmt":"%y%m%d%H"},
+    35:{"varDir":"stpc5","filePre":"stpc5_","title":"Sig Tor Parm. (0-500m Within Effective Layer)","ymdFmt":"%y%m%d%H"},
+    36:{"varDir":"hail","filePre":"hail_","title":"-10 to -30 C CAPE, FZL, Shear","ymdFmt":"%y%m%d%H"},
+    37:{"varDir":"qlcs1","filePre":"qlcs1_","title":"Theta-E Diff, MUCAPE, Shear","ymdFmt":"%y%m%d%H"},
+    38:{"varDir":"qlcs2","filePre":"qlcs2_","title":"Theta-E Diff, MLCAPE, Shear","ymdFmt":"%y%m%d%H"},
+    # Heavy Rain
+    39:{"varDir":"pwtr","filePre":"pwtr_","title":"Precipitable Water","ymdFmt":"%y%m%d%H"},
+    40:{"varDir":"pwtr2","filePre":"pwtr2_","title":"Precipitable Water and 850mb Transport","ymdFmt":"%y%m%d%H"},
+    41:{"varDir":"tran","filePre":"tran_","title":"850mb Transport and Theta-E","ymdFmt":"%y%m%d%H"},
+    42:{"varDir":"tran_925","filePre":"tran_925_","title":"925mb Transport and Theta-E","ymdFmt":"%y%m%d%H"},
+    43:{"varDir":"tran_925-850","filePre":"tran_925-850_","title":"925-850mb Transport and Avg Theta-E","ymdFmt":"%y%m%d%H"},
+    44:{"varDir":"prop","filePre":"prop_","title":"850mb Transport and Theta-E","ymdFmt":"%y%m%d%H"}
 }

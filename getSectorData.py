@@ -1,121 +1,149 @@
-#!/usr/bin/env python3
+############################################################################
+# startDateTime: Date and time you want to start grabbing images for (yyyymmdd_hh)
+# endDateTime: Date and time you want to stop grabbing images for (inclusive [yyyymmdd_hh])
+# sector: SPC meso sector you wish to grab (number[string] only - see below)
+#
+# 11:NW
+# 12:SW
+# 13:N Plns
+# 14:C Plns
+# 15:S Plns
+# 16: NE
+# 17: EC
+# 18: SE
+# 19: National
+# 20: MW
+# 21: Great Lakes
+# 
+# parmKeys: What parameters you'd like to download imagery for. Note that using
+#           the string "ALL" downloads all configured imagery. Including a comma delimited
+#           list of keys corresponding to the spcDict accessed by running the following will
+#           only download those select parms.
+#           ./getSectorData -key        
+############################################################################
 
-import getSectorConfig as sConf
-from datetime import datetime, timedelta
+surface = [
+['pmsl', 'Pressure and Wind'], ['bigsfc', 'Surface Plot'], ['ttd', 'Temp/Wind/Dwpt'],
+['thet', 'MSL Press/Theta-e/Wind'], ['mcon', 'Moisture Convergence'], ['thea', 'Theta-E Advection'],
+['mxth', 'Mixing Ratio / Theta'], ['icon', 'Inst Contraction Rate'], ['trap', 'Fluid Trapping'],
+['vtm', 'Velocity Tensor Mag'], ['dvvr', 'Sfc Div and Vort'], ['def', 'Deformation / Axis of Dilitation'],
+['pchg', '2hr Press Change'], ['temp_chg', '3hr Temp Change'], ['dwpt_chg', '3hr Dewpoint Change'], 
+['mixr_chg', '3hr 100mb MixR Change'], ['thte_chg', '3hr Thetae Change']]
+
+upper_air =[['925mb', '925mb Analysis'], 
+['850mb2', '850mb Analysis'], ['850mb', '850mb Analysis v2'], ['700mb', '700mb Analysis'], ['500mb', '500mb Analysis'], 
+['300mb', '300mb Analysis'], ['dlcp', 'Deep Moist Conv'], ['tadv_925', '925mb Temp Adv'], ['tadv', '850mb Temp Adv'], 
+['7tad', '700mb Temp Adv'], ['sfnt', 'Surface FGEN'], ['9fnt', '925mb FGEN'], ['8fnt', '850mb FGEN'], ['7fnt', '700mb FGEN'], 
+['epvl', '850 fgen & EPV'], ['epvm', '700 fgen & EPV'], ['98ft', '925-850mb FGEN'], ['857f', '850-700mb FGEN'], 
+['75ft', '700-500mb FGEN'], ['vadv', '700-400mb Diff PVA'], ['padv', '400-250mb Pot Vort Adv'], ['ddiv', '850-250mb Diff Div'], 
+['ageo', '300mb Jet Circ'], ['500mb_chg', '12hr H5 chg'], ['trap_500', 'Fluid Trapping (H500)'], ['trap_250', 'Fluid Trapping (H250)']]
+
+thermodynamics = [['sbcp', 'SBCAPE'], ['mlcp', 'MLCAPE'], ['mucp', 'MUCAPE'], ['eltm', 'EL Temp/MUCAPE/MUCIN'], ['ncap', 'CAPE - Normalized'], 
+['dcape', 'CAPE - Downdraft'], ['muli', 'Sfc Based LI'], ['laps', 'Mid-Level Lapse Rates'], ['lllr', 'Low-Level Lapse Rates'], 
+['maxlr', 'Max 2-6 km AGL Lapse Rate'], ['lclh', 'LCL hght'], ['lfch', 'LFC hght'], ['lfrh', 'LCL-LFC RH'], 
+['sbcp_chg', '3-hour SBCAPE Change'], ['sbcn_chg', '3-hour SBCIN Change'], ['mlcp_chg', '3-hour MLCAPE Change'], 
+['mucp_chg', '3-hour MUCAPE Change'], ['lllr_chg', '3-hour Low LR Change'], ['laps_chg', '6-hour Mid LR Change'], 
+['skewt', 'Skew-T Maps']]
+
+wind_shear = [['eshr', 'Bulk Shear - Effective'], ['shr6', 'Bulk Shear - Sfc-6km'], ['shr8', 'Bulk Shear - Sfc-8km'], ['shr3', 'Bulk Shear - Sfc-3km'], 
+['shr1', 'Bulk Shear - Sfc-1km'], ['brns', 'BRN Shear'], ['effh', 'SR Helicity - Effective'], ['srh3', 'SR Helicity - Sfc-3km'], 
+['srh1', 'SR Helicity - Sfc-1km'], ['srh5', 'SR Helicity - Sfc-500m'], ['llsr', 'SR Wind - Sfc-2km'], ['mlsr', 'SR Wind - 4-6km'], 
+['ulsr', 'SR Wind - 9-11km'], ['alsr', 'SR Wind - Anvil Level'], ['mnwd', '850-300mb Mean Wind'], ['xover', '850 and 500mb Winds'], 
+['srh3_chg', '3hr Sfc-3km SR Helicity Change'], ['shr1_chg', '3hr Sfc-1km Bulk Shear Change'], ['shr6_chg', '3hr Sfc-6km Bulk Shear Change'], 
+['hodo', 'Hodograph Map']]
+
+composite_indices = [['scp', 'Supercell Composite'], ['stor', 'Sig Tor (fixed)'], ['stpc', 'Sig Tor (eff)'], ['stpc5', 'Sig Tor (0-500m SRH)'],
+['sigt1', 'Cond Prob SigTor 1'], ['sigt2', 'Cond Prob SigTor 2'], ['nstp', 'Non-Supercell Tor'], ['vtp3', 'Violent Tor Parm'],
+['sigh', 'Significant Hail'], ['sars1', 'SARS Hail Size'], ['sars2', 'SARS Hail %age'], ['lghl', 'Large Hail Parm'], ['dcp', 'Derecho Comp'],
+['cbsig', 'Craven/Brooks SigSvr'], ['brn', 'Bulk Ri Number'], ['mcsm', 'MCS Maint'], ['mbcp', 'Microburst Composite'], ['desp', 'Enh Stretch Pot'],
+['ehi1', 'EHI - Sfc-1km'], ['ehi3', 'EHI - Sfc-3km'], ['vgp3', 'VGP - Sfc-3km'], ['crit', 'Critical Angle']]
+
+multi_parameter_fields = [['mlcp_eshr', 'MLCAPE / Eff Shear'],['cpsh', 'MUCAPE / Eff Shear'], ['comp', 'MU LI / H8 & H5 Wind'], ['lcls', 'LCL Hgt / 0-1 SRH'],
+['lr3c', '0-3km Lapse Rate/MLCAPE'], ['3cape_shr3', '0-3km Bulk Shear/MLCAPE'], ['3cvr', 'Sfc Vort / 0-3km MLCAPE'], ['tdlr', 'Sfc Dwpt / H7-H5 LapseR'],
+['qlcs1', '0-3km ThetaE diff/Shear Vec & MUCAPE'], ['qlcs2', '', '0-3km ThetaE diff/Shear Vec & MLCAPE']]
+
+heavy_rain = [['pwtr', 'PWAT'], ['tran_925', '925 Moist Trans'], ['tran', '850 Moist Trans'], ['tran_925-850', '925-850 Mtrans'],
+['prop', 'Propagation Vec'], ['peff', 'Pcpn Potential'], ['mixr', '100mb Mean Mixing Ratio']]
+
+winter_weather = [['ptyp', 'Precipitation Type'], ['epvl', '800-750mb EPVg'], ['epvm', '650-500mb EPVg'], ['les1', 'Lake Effect Snow 1'],
+['les2', 'Lake Effect Snow 2'], ['snsq', 'Snow Squall Parameter'], ['dend', 'Dendritic Growth Layer Depth'], ['dendrh', 'Dendritic Growth Layer RH']]
+
+fire_weather = [ ['sfir', 'Sfc RH / T / Wind'], ['fosb', 'Fosberg Index'], ['lhan', 'Low Haines Index'], ['mhan', 'Mid Haines Index'], ['hhan', 'High Haines Index'],
+['lasi', 'Lower Atmos Severity Index']]
+
+classic = [['ttot', 'Total Totals'], ['show', 'Showalter Index'], ['kidx', 'K Index']]
+
+beta = [['sherbe', 'SHERBE'], ['moshe', 'Modified SHERBE'], ['cwasp', 'CWASP'], 
+['tehi', 'Tornadic 0-1 km EHI'], ['tts', 'Tornadic Tilting and Stretching parameter (TTS)'], ['ptstpe', 'Conditional probability of EF0+ tornadoes'], 
+['pstpe', 'Conditional probability of EF2+ tornadoes'], ['pvstpe', 'Conditional probability of EF4+ tornadoes']]
+
+#download_groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields, heavy_rain, winter_weather, fire_weather, classic, beta]
+download_groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields] #, heavy_rain, winter_weather, fire_weather, classic, beta]
+
+#Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
+
+from datetime import datetime,timedelta
+from time import strftime
 import urllib.request
 import os
+from pathlib import PurePath
+
+baseDir = "C:/data/events/"
+spcDir = "https://www.spc.noaa.gov/exper/mesoanalysis/"
+
+startDateTime = "20220512_16"
+endDateTime = "20220513_04"
+sector = "13"
+parmKeys = "ALL"
+class GetMesoImages:
+    def __init__(self,startDateTime='20220512_16',endDateTime='20220512_16',sector='s13',parm_groups=[surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields]):
+        self.startDateTime = startDateTime
+        self.endDateTime = endDateTime
+        self.date_hour_list = self.make_date_hour_list()
+        self.sector = sector
+        self.urlpre = f'https://www.spc.noaa.gov/exper/mesoanalysis/s{self.sector}'
+        self.parm_groups = parm_groups
+        self.graphics_list = self.make_graphics_list()
+        self.download_and_store_images()
+
+    def make_date_hour_list(self):
+        dateList = []
+        starting_datetime = datetime.strptime(self.startDateTime,"%Y%m%d_%H")
+        ending_datetime = datetime.strptime(self.endDateTime,"%Y%m%d_%H")
+        while starting_datetime <= ending_datetime:
+            dt_str = datetime.strftime(starting_datetime,'%y%m%d%H')
+            dateList.append(dt_str)
+            starting_datetime = starting_datetime + timedelta(hours=1)
+        return dateList
+
+    def make_graphics_list(self):
+        graphics_list = []
+        for g in self.parm_groups:
+            for e in g:
+                graphics_list.append(e)
+        return graphics_list
+
+    def download_and_store_images(self):
+        for dt in self.date_hour_list:
+            imagePath = PurePath(baseDir).joinpath(dt,self.sector)
+            PurePath.mkdir(imagePath,exist_ok=False)
+            # mkdir baseDir + dt + self.sector
+            for gr in self.graphics_list:
+                #Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
+                source_filename = f'{gr}_{dt}.gif'
+                fullURL = f'{spcDir}{self.sector}/{gr}/{source_filename}'
+                destination_filepath = PurePath(imagePath).joinpath(f'{gr}.gif')
+                try:
+                    opener = urllib.request.build_opener()
+                    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+                    urllib.request.install_opener(opener)
+                    urllib.request.urlretrieve(fullURL,destination_filepath)
+                except Exception as e:
+                    print(f'{source_filename} plot not available')
+        return
 
 
-# get a date range
-# get a list of parameters to dl
-# print a list of available
-# https://www.spc.noaa.gov/exper/mesoanalysis/s18/
+# instantiate class
 
-urlpre = "https://www.spc.noaa.gov/exper/mesoanalysis/s"+sConf.sector+"/"
-
-spcDict = {
-    # SATRAD
-    # 1:{"varDir":"1kmv","filePre":"vis_","title":"Visible Satellite","ymdFmt":"%Y%m%d_%H00"},
-    # 2:{"varDir":"rgnlrad","filePre":"rad_","title":"Radar","ymdFmt":"%Y%m%d_%H00"},
-    # SURFACE
-    3:{"varDir":"pmsl","filePre":"pmsl_","title":"MSLP and Wind","ymdFmt":"%y%m%d%H"},
-    4:{"varDir":"ttd","filePre":["ttd_sf_","ttd_"],"title":"MSLP, Wind, T and Td","ymdFmt":"%y%m%d%H"},
-    5:{"varDir":"thet","filePre":"thet_","title":"MSLP, Wind, Theta-E","ymdFmt":"%y%m%d%H"},
-    6:{"varDir":"pchg","filePre":"pchg_","title":"2hr Sfc Pres Chg","ymdFmt":"%y%m%d%H"},
-    7:{"varDir":"thte_chg","filePre":"thte_chg_","title":"3hr Theta-E Chg","ymdFmt":"%y%m%d%H"},
-    # UPPER AIR
-    8:{"varDir":"925mb","filePre":"925mb_","title":"925mb Analysis","ymdFmt":"%y%m%d%H"},
-    9:{"varDir":"850mb","filePre":"850mb_","title":"850mb Analysis","ymdFmt":"%y%m%d%H"},
-    10:{"varDir":"850mb2","filePre":"850mb2_","title":"850mb Analysis Version 2","ymdFmt":"%y%m%d%H"},
-    11:{"varDir":"700mb","filePre":"700mb_","title":"700mb Analysis","ymdFmt":"%y%m%d%H"},
-    12:{"varDir":"500mb","filePre":"500mb_","title":"500mb Analysis","ymdFmt":"%y%m%d%H"},
-    13:{"varDir":"300mb","filePre":"300mb_","title":"300mb Analysis","ymdFmt":"%y%m%d%H"},
-    14:{"varDir":"500mb_chg","filePre":"500mb_chg_","title":"12hr 500mb Height Change, Cur Height, Wind","ymdFmt":"%y%m%d%H"},
-    # THERMO
-    15:{"varDir":"sbcp","filePre":"sbcp_","title":"SBCAPE and SBCIN","ymdFmt":"%y%m%d%H"},
-    16:{"varDir":"mlcp","filePre":"mlcp_","title":"MLCAPE and MLCIN","ymdFmt":"%y%m%d%H"},
-    17:{"varDir":"mucp","filePre":"mucp_","title":"MUCAPE and Lifted Parcel Level","ymdFmt":"%y%m%d%H"},
-    18:{"varDir":"dcape","filePre":"dcape_","title":"DCAPE and DCIN","ymdFmt":"%y%m%d%H"},
-    19:{"varDir":"laps","filePre":"laps_","title":"700-500mb Lapse Rate","ymdFmt":"%y%m%d%H"},
-    20:{"varDir":"lllr","filePre":"lllr_","title":"0-3km Lapse Rate","ymdFmt":"%y%m%d%H"},
-    21:{"varDir":"lclh","filePre":"lclh_","title":"100 mb mean parcel LCL height","ymdFmt":"%y%m%d%H"},
-    # WIND SHEAR
-    22:{"varDir":"eshr","filePre":"eshr_","title":"Effective Bulk Shear","ymdFmt":"%y%m%d%H"},
-    23:{"varDir":"shr6","filePre":"shr6_","title":"Surface to 6km Shear","ymdFmt":"%y%m%d%H"},
-    24:{"varDir":"shr3","filePre":"shr3_","title":"Surface to 3km Shear","ymdFmt":"%y%m%d%H"},
-    25:{"varDir":"shr1","filePre":"shr1_","title":"Surface to 1km Shear","ymdFmt":"%y%m%d%H"},
-    26:{"varDir":"effh","filePre":"effh_","title":"Effective Layer SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
-    27:{"varDir":"srh1","filePre":"srh1_","title":"0-1km SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
-    28:{"varDir":"srh3","filePre":"srh3_","title":"0-3km SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
-    29:{"varDir":"srh5","filePre":"srh5_","title":"0-500m SRH and Storm Motion","ymdFmt":"%y%m%d%H"},
-    30:{"varDir":"mnwd","filePre":"mnwd_","title":"850-300mb Mean Wind","ymdFmt":"%y%m%d%H"},
-    31:{"varDir":"alsr","filePre":"alsr_","title":"Anvil Level SR Wind","ymdFmt":"%y%m%d%H"},
-    32:{"varDir":"hodo","filePre":"hodo_","title":"RAP Hodographs","ymdFmt":"%y%m%d%H"},
-    # Multi-Parm Fields
-    33:{"varDir":"stor","filePre":"stor_","title":"Sig Tor Parm. (Fixed Layer)","ymdFmt":"%y%m%d%H"},
-    34:{"varDir":"stpc","filePre":"stpc_","title":"Sig Tor Parm. (Effective Layer)","ymdFmt":"%y%m%d%H"},
-    35:{"varDir":"stpc5","filePre":"stpc5_","title":"Sig Tor Parm. (0-500m Within Effective Layer)","ymdFmt":"%y%m%d%H"},
-    36:{"varDir":"hail","filePre":"hail_","title":"-10 to -30 C CAPE, FZL, Shear","ymdFmt":"%y%m%d%H"},
-    37:{"varDir":"qlcs1","filePre":"qlcs1_","title":"Theta-E Diff, MUCAPE, Shear","ymdFmt":"%y%m%d%H"},
-    38:{"varDir":"qlcs2","filePre":"qlcs2_","title":"Theta-E Diff, MLCAPE, Shear","ymdFmt":"%y%m%d%H"},
-    # Heavy Rain
-    39:{"varDir":"pwtr","filePre":"pwtr_","title":"Precipitable Water","ymdFmt":"%y%m%d%H"},
-    40:{"varDir":"pwtr2","filePre":"pwtr2_","title":"Precipitable Water and 850mb Transport","ymdFmt":"%y%m%d%H"},
-    41:{"varDir":"tran","filePre":"tran_","title":"850mb Transport and Theta-E","ymdFmt":"%y%m%d%H"},
-    42:{"varDir":"tran_925","filePre":"tran_925_","title":"925mb Transport and Theta-E","ymdFmt":"%y%m%d%H"},
-    43:{"varDir":"tran_925-850","filePre":"tran_925-850_","title":"925-850mb Transport and Avg Theta-E","ymdFmt":"%y%m%d%H"},
-    44:{"varDir":"prop","filePre":"prop_","title":"850mb Transport and Theta-E","ymdFmt":"%y%m%d%H"}
-}
-
-def makeDLDict():
-    if type(sConf.parmKeys) is list:
-        dlDict = {}
-        for idx, parm in sConf.parmKeys:
-            dlDict[idx] = spcDict[idx]
-    else:
-        dlDict = spcDict.copy()
-    return dlDict
-
-def makeDateList():
-    startDateTime = datetime.strptime(sConf.startDateTime,"%Y%m%d_%H")
-    endDateTime = datetime.strptime(sConf.endDateTime,"%Y%m%d_%H")
-    dateList = []
-    while startDateTime <= endDateTime:
-        dateList.append(startDateTime)
-        startDateTime = startDateTime + timedelta(hours=1)
-    return dateList
-
-def dlAndStoreImage(eachDate,val,dateDir):
-    fmtdDate = eachDate.strftime(val["ymdFmt"])
-    if type(val["filePre"]) is list:
-        for eachPrefix in val["filePre"]:
-            fileName = eachPrefix + fmtdDate + ".gif"
-            fullURL = urlpre + val["varDir"] + "/" + fileName
-            try:
-                opener = urllib.request.build_opener()
-                opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-                urllib.request.install_opener(opener)
-                urllib.request.urlretrieve(fullURL,os.path.join(dateDir,fileName))
-            except Exception as e:
-                print(val["title"] + " plot not available")
-    else:
-        fileName = val["filePre"] + fmtdDate + ".gif"
-        fullURL = urlpre + val["varDir"] + "/" + val["filePre"] + fmtdDate + ".gif"
-        try:
-            opener = urllib.request.build_opener()
-            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-            urllib.request.install_opener(opener)
-            urllib.request.urlretrieve(fullURL,os.path.join(dateDir,fileName))
-        except Exception as e:
-            print(val["title"] + " plot not available")
-    return
-
-dlDict = makeDLDict()
-dateList = makeDateList()
-for eachDate in dateList:
-    dateDir = "C:/data/scripts/" + eachDate.strftime("%y%m%d%H")
-    if not os.path.exists(dateDir):
-        os.makedirs(dateDir)
-    for key, val in dlDict.items():
-        dlAndStoreImage(eachDate,val,dateDir)
+test = GetMesoImages()
 
