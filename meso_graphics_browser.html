@@ -3,7 +3,8 @@
 
 <!--
 -----------------------------------------------------------------------------
-05/10/2022 - Version 1.04
+12/12/2022 - Version 1.04
+Added SPC sector 21 (Westerm Great Lakes)
 Added SPC sector 20 (Midwest)
 
 please email thomas.turnage@noaa.gov for bug reports or suggestions
@@ -63,6 +64,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             color:rgb(250, 0, 0)
         }
 
+
         .description-highlight {
             color: red;
             font-size: 0.8rem;
@@ -87,9 +89,23 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             font-weight: bold;
         }
 
+        .sat-prod {
+            font-size: 1.0rem;
+            font-family: arial;
+            color: #990000;
+            font-weight: bold;
+        }
+
+
         .spc-info {
             font-size: 0.7rem;
             font-family: arial;
+        }
+
+        .sat-info {
+            font-size: 1.0rem;
+            font-family: arial;
+            font-weight: bold;
         }
 
         .description box {
@@ -122,6 +138,20 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             background-color: rgb(245, 245, 245);
         }
 
+        .us-loop {
+
+            color: rgb(172, 0, 0);
+            /*border-style: solid;
+            border-width: 1px;*/
+
+        }
+
+        .sector-loop {
+            color: rgb(0, 9, 139);
+            /*border-style: solid;
+            border-width: 1px;*/
+        }
+
         .rd {
             background-image: url("http://www.spc.noaa.gov/exper/mesoanalysis/s14/rgnlrad/rgnlrad.gif?1278279059554");
             width: 901px;
@@ -142,75 +172,17 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
 
 <body>
     <div class="container stretch">
-        <div class="justify-content-center text-center">
-            <span><b>Sector:&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s16gl" value="s16" checked>
-                <label class="form-check-label" for="greatlakes">GL</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s16ne" value="s16">
-                <label class="form-check-label" for="greatlakes">NE</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s17" value="s17">
-                <label class="form-check-label" for="greatlakes">Mid Atl</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s18se" value="s18">
-                <label class="form-check-label" for="greatlakes">SE</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s18smv" value="s18">
-                <label class="form-check-label" for="greatlakes">S Miss Val</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s13" value="s13">
-                <label class="form-check-label" for="greatlakes">N Plains</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s20" value="s20">
-                <label class="form-check-label" for="greatlakes">Midwest</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s14" value="s14">
-                <label class="form-check-label" for="greatlakes">C Plains</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s15" value="s15">
-                <label class="form-check-label" for="greatlakes">S Plains</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s11nw" value="s11">
-                <label class="form-check-label" for="greatlakes">NW</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s11nr" value="s11">
-                <label class="form-check-label" for="greatlakes">N Rock</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s12sw" value="s12">
-                <label class="form-check-label" for="greatlakes">SW</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input radio" type="radio" name="mesoSector" id="s12sr" value="s12">
-                <label class="form-check-label" for="greatlakes">S Rock</label>
-            </div>
 
-
-        </div>
         <div class="justify-content-center text-center">
-            <button type="button" class="btn btn-outline-danger btn-sm" id="surface">Surface</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="upper_air">Upper Air</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="thermodynamics">Thermodynamicss</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="wind_shear">Wind Shear</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="composite_indices">Composite Indicies</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="multi_parameter_fields">Multi Parameter Fields</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="heavy_rain">Heavy Rain</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="winter_weather">Winter Weather</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" id="fire_weather">Fire Weather</button>
-            <button type="button" class="btn btn-outline-success btn-sm" id="classic">Classic</button>
-            <button type="button" class="btn btn-outline-success btn-sm" id="beta">Beta</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="surface">Sfc</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="upper">Upper</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="ma-stability">Thermo</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="ma-shear">Shear</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="ma-composite">Comp</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" id="ma-multiparm">Multi</button>
+            <button type="button" class="btn btn-outline-success btn-sm" id="wpc">Precip</button>
+            <button type="button" class="btn btn-outline-success btn-sm" id="ma-fire">Fire</button>
+            <button type="button" class="btn btn-outline-success btn-sm" id="ma-winter">Winter</button>
         </div>
 
         <div class="container-fluid">
@@ -226,6 +198,105 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
     </div>
     <div class="container-fluid">
         <div class="d-flex justify-content-center text-center">
+
+            <div class="divider" id="section_swody1">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-2 time"><a href="https://www.spc.noaa.gov/products/outlook/day1otlk.html"
+                                target="_blank">Most Recent</a></div>
+                        <div class="col-sm-2 image" id="dy1_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy1_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy1_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy1_torn">Tornado</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2 time"><a
+                                href="https://www.spc.noaa.gov/products/outlook/day1otlk_0100.html" target="_blank">0100
+                                UTC</a></div>
+                        <div class="col-sm-2 image" id="dy1_0100_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy1_0100_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy1_0100_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy1_0100_torn">Tornado</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2 time"><a
+                                href="https://www.spc.noaa.gov/products/outlook/day1otlk_0600.html" target="_blank">0600
+                                UTC</a></div>
+                        <div class="col-sm-2 image" id="dy1_0600_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy1_0600_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy1_0600_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy1_0600_torn">Tornado</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2 time"><a
+                                href="https://www.spc.noaa.gov/products/outlook/day1otlk_1300.html" target="_blank">1300
+                                UTC</a></div>
+                        <div class="col-sm-2 image" id="dy1_1300_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy1_1300_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy1_1300_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy1_1300_torn">Tornado</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2 time"><a
+                                href="https://www.spc.noaa.gov/products/outlook/day1otlk_1630.html" target="_blank">1630
+                                UTC</a></div>
+                        <div class="col-sm-2 image" id="dy1_1630_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy1_1630_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy1_1630_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy1_1630_torn">Tornado</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider" id="section_swody2">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-2 time"><a href="https://www.spc.noaa.gov/products/outlook/day2otlk.html"
+                                target="_blank">Most Recent</a></div>
+                        <div class="col-sm-2 image" id="dy2_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy2_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy2_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy2_torn">Tornado</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 time"><a
+                                href="https://www.spc.noaa.gov/products/outlook/day2otlk_0600.html" target="_blank">0600
+                                UTC</a></div>
+                        <div class="col-sm-2 image" id="dy2_0600_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy2_0600_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy2_0600_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy2_0600_torn">Tornado</div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 time"><a
+                                href="https://www.spc.noaa.gov/products/outlook/day2otlk_1730.html" target="_blank">1730
+                                UTC</a></div>
+                        <div class="col-sm-2 image" id="dy2_1730_otlk">Outlook</div>
+                        <div class="col-sm-2 image" id="dy2_1730_hail">Hail</div>
+                        <div class="col-sm-2 image" id="dy2_1730_wind">Wind</div>
+                        <div class="col-sm-2 image" id="dy2_1730_torn">Tornado</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider" id="section_spc_watch">
+                <div class="row">
+                    <div class="col-sm-2 time"><a href="https://www.spc.noaa.gov/products/md/" target="_blank">Meso
+                            Page</a></div>
+                    <div class="col-sm-2 time"><a href="https://www.spc.noaa.gov/products/watch/"
+                            target="_blank">Watches Page</a></div>
+                    <div class="col-sm-2 time"><a href="https://www.spc.noaa.gov/climo/online/#reports"
+                            target="_blank">Reports Page</a></div>
+                    <div class="col-sm-2 image" id="s-mds">Meso Disc</div>
+                    <div class="col-sm-2 image" id="s-watch">Watches</div>
+                    <div class="col-sm-2 image" id="rpts">Storm Rpts</div>
+                </div>
+            </div>
 
             <div class="divider" id="section_surface">
                 <div class="row">
@@ -250,7 +321,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_upper_air">
+            <div class="divider" id="section_upper">
                 <div class="row">
                     <div class="col-sm-2 image nr" id="925mb">925mb Analysis</div>
                     <div class="col-sm-2 image nr" id="850mb2">850mb Analysis</div>
@@ -281,7 +352,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_thermodynamics">
+            <div class="divider" id="section_ma-stability">
                 <div class="row">
                     <div class="col-sm-2 image nr" id="sbcp">SBCAPE</div>
                     <div class="col-sm-2 image nr" id="mlcp">MLCAPE</div>
@@ -310,7 +381,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_wind_shear">
+            <div class="divider" id="section_ma-shear">
                 <div class="row">
                     <div class="col-sm-2 image nr" id="eshr">Bulk Shear - Effective</div>
                     <div class="col-sm-2 image nr" id="shr6">Bulk Shear - Sfc-6km</div>
@@ -335,7 +406,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_composite_indices">
+            <div class="divider" id="section_ma-composite">
                 <div class="row">
                     <div class="col-sm-2 image nr" id="scp">Supercell Composite</div>
                     <div class="col-sm-2 image nr" id="stor">Sig Tor (fixed)</div>
@@ -370,7 +441,8 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_multi_parameter_fields">
+
+            <div class="divider" id="section_ma-multiparm">
                 <div class="row">
                     <div class="col-sm-2 image nr" id="mlcp_eshr">MLCAPE / Eff Shear</div>
                     <div class="col-sm-2 image nr" id="cpsh">MUCAPE / Eff Shear</div>
@@ -385,18 +457,20 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_heavy_rain">
+            <div class="divider" id="section_wpc">
                 <div class="row">
-                    <div class="col-sm-2 image" id="pwtr">PWAT</div>
-                    <div class="col-sm-2 image" id="tran_925">925 Moist Trans</div>
-                    <div class="col-sm-2 image" id="tran">850 Moist Trans</div>
-                    <div class="col-sm-2 image" id="tran_925-850">925-850 Mtrans</div>
-                    <div class="col-sm-2 image" id="prop">Propagation Vec</div>
-                    <div class="col-sm-2 image" id="peff">Pcpn Potential</div>
+                    <div class="row">
+                        <div class="col-sm-2 image" id="pwtr">PWAT</div>
+                        <div class="col-sm-2 image" id="tran_925">925 Moist Trans</div>
+                        <div class="col-sm-2 image" id="tran">850 Moist Trans</div>
+                        <div class="col-sm-2 image" id="tran_925-850">925-850 Mtrans</div>
+                        <div class="col-sm-2 image" id="prop">Propagation Vec</div>
+                        <div class="col-sm-2 image" id="peff">Pcpn Potential</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="divider" id="section_winter_weather">
+            <div class="divider" id="section_ma-winter">
                 <div class="row">
                     <div class="col-sm-2 image nr" id="ptyp">Precipitation Type</div>
                     <div class="col-sm-2 image nr" id="epvl">800-750mb EPVg</div>
@@ -409,7 +483,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_fire_weather">
+            <div class="divider" id="section_ma-fire">
                 <div class="row">
                     <div class="col-sm-2 image nr" id="sfir">Sfc RH / T / Wind</div>
                     <div class="col-sm-2 image nr" id="fosb">Fosberg Index</div>
@@ -420,27 +494,6 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
-            <div class="divider" id="section_classic">
-                <div class="row">
-                    <div class="col-sm-2 image nr" id="sfir">Sfc RH / T / Wind</div>
-                    <div class="col-sm-2 image nr" id="fosb">Fosberg Index</div>
-                    <div class="col-sm-2 image nr" id="lhan">Low Haines Index</div>
-                    <div class="col-sm-2 image nr" id="mhan">Mid Haines Index</div>
-                    <div class="col-sm-2 image nr" id="hhan">High Haines Index</div>
-                    <div class="col-sm-2 image nr" id="lasi">Lower Atmos Severity Index</div>
-                </div>
-            </div>
-
-            <div class="divider" id="section_beta">
-                <div class="row">
-                    <div class="col-sm-2 image nr" id="sfir">Sfc RH / T / Wind</div>
-                    <div class="col-sm-2 image nr" id="fosb">Fosberg Index</div>
-                    <div class="col-sm-2 image nr" id="lhan">Low Haines Index</div>
-                    <div class="col-sm-2 image nr" id="mhan">Mid Haines Index</div>
-                    <div class="col-sm-2 image nr" id="hhan">High Haines Index</div>
-                    <div class="col-sm-2 image nr" id="lasi">Lower Atmos Severity Index</div>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -475,103 +528,183 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
         const day1prob = spc_out + 'day1probotlk_'
         const day2prob = spc_out + 'day2probotlk_'
 
-        let ma_sector = 's16'
-        const exper = 'http://www.spc.noaa.gov/exper/'
-        let ma_base = exper + 'mesoanalysis/'
-        let ma = ma_base + ma_sector + '/'
+        // We're viewing images in the same directory that this html document resides, so don't need to create a URL
+        //let ma_sector = 's21'
+        //const exper = 'http://www.spc.noaa.gov/exper/'
+        //let ma_base = exper + 'mesoanalysis/'
+        //let ma = ma_base + ma_sector + '/'
 
         const wpc_qpf = 'http://www.wpc.ncep.noaa.gov/qpf/'
         const sat = 'https://cdn.star.nesdis.noaa.gov//GOES16/ABI/SECTOR/';
         const sat_conus = 'https://cdn.star.nesdis.noaa.gov//GOES16/ABI/CONUS/'
-        let urls = { }
+        let urls = {
+            'dy1_otlk': spc_out + 'day1otlk.gif',
+            'dy1_hail': day1prob + 'hail.gif',
+            'dy1_wind': day1prob + 'wind.gif',
+            'dy1_torn': day1prob + 'torn.gif',
+            'dy3_otlk': spc_out + 'day3otlk.gif',
+            'dy1_0100_otlk': spc_out + 'day1otlk_0100.gif',
+            'dy1_0100_torn': day1prob + '0100_torn.gif',
+            'dy1_0100_hail': day1prob + '0100_hail.gif',
+            'dy1_0100_wind': day1prob + '0100_wind.gif',
+            'dy1_0600_otlk': spc_out + 'day1otlk_1200.gif',
+            'dy1_0600_torn': day1prob + '1200_torn.gif',
+            'dy1_0600_hail': day1prob + '1200_hail.gif',
+            'dy1_0600_wind': day1prob + '1200_wind.gif',
+            'dy1_1300_otlk': spc_out + 'day1otlk_1300.gif',
+            'dy1_1300_torn': day1prob + '1300_torn.gif',
+            'dy1_1300_hail': day1prob + '1300_hail.gif',
+            'dy1_1300_wind': day1prob + '1300_wind.gif',
+            'dy1_1630_otlk': spc_out + 'day1otlk_1630.gif',
+            'dy1_1630_torn': day1prob + '1630_torn.gif',
+            'dy1_1630_hail': day1prob + '1630_hail.gif',
+            'dy1_1630_wind': day1prob + '1630_wind.gif',
+            'dy1_2000_otlk': spc_out + 'day1otlk_2000.gif',
+            'dy1_2000_torn': day1prob + '2000_torn.gif',
+            'dy1_2000_hail': day1prob + '2000_hail.gif',
+            'dy1_2000_wind': day1prob + '2000_wind.gif',
+            'dy2_otlk': spc_out + 'day2otlk.gif',
+            'dy2_torn': spc_out + 'day2probotlk_torn.gif',
+            'dy2_wind': spc_out + 'day2probotlk_wind.gif',
+            'dy2_hail': spc_out + 'day2probotlk_hail.gif',
+            'dy2_0600_otlk': spc_out + 'day2otlk_0600_prt.gif',
+            'dy2_0600_torn': spc_out + 'day2probotlk_0600_torn_prt.gif',
+            'dy2_0600_hail': spc_out + 'day2probotlk_0600_hail_prt.gif',
+            'dy2_0600_wind': spc_out + 'day2probotlk_0600_wind_prt.gif',
+            'dy2_1730_otlk': spc_out + 'day2otlk_1730_prt.gif',
+            'dy2_1730_torn': spc_out + 'day2probotlk_1730_torn_prt.gif',
+            'dy2_1730_hail': spc_out + 'day2probotlk_1730_hail_prt.gif',
+            'dy2_1730_wind': spc_out + 'day2probotlk_1730_wind_prt.gif',
+            'dy2_hail': spc_out + 'day2probotlk_hail.gif',
+            'dy2_wind': spc_out + 'day2probotlk_wind.gif',
+            's-watch': spc_prods + 'watch/validww.png',
+            's-mds': spc_prods + 'md/validmd.gif',
+            'cint': 'https://www.nsstc.uah.edu/SATCAST/goes-east_fulldomain/UAH_SATCASTv3_CI_VIS.png'
+        }
 
-        let surface = [
-        ['pmsl', 'Pressure and Wind'], ['bigsfc', 'Surface Plot'], ['ttd', 'Temp/Wind/Dwpt'],
-        ['thet', 'MSL Press/Theta-e/Wind'], ['mcon', 'Moisture Convergence'], ['thea', 'Theta-E Advection'],
-        ['mxth', 'Mixing Ratio / Theta'], ['icon', 'Inst Contraction Rate'], ['trap', 'Fluid Trapping'],
-        ['vtm', 'Velocity Tensor Mag'], ['dvvr', 'Sfc Div and Vort'], ['def', 'Deformation / Axis of Dilitation'],
-        ['pchg', '2hr Press Change'], ['temp_chg', '3hr Temp Change'], ['dwpt_chg', '3hr Dewpoint Change'], 
-        ['mixr_chg', '3hr 100mb MixR Change'], ['thte_chg', '3hr Thetae Change']]
 
-        let upper_air =[['925mb', '925mb Analysis'], 
-        ['850mb2', '850mb Analysis'], ['850mb', '850mb Analysis v2'], ['700mb', '700mb Analysis'], ['500mb', '500mb Analysis'], 
-        ['300mb', '300mb Analysis'], ['dlcp', 'Deep Moist Conv'], ['tadv_925', '925mb Temp Adv'], ['tadv', '850mb Temp Adv'], 
-        ['7tad', '700mb Temp Adv'], ['sfnt', 'Surface FGEN'], ['9fnt', '925mb FGEN'], ['8fnt', '850mb FGEN'], ['7fnt', '700mb FGEN'], 
-        ['epvl', '850 fgen & EPV'], ['epvm', '700 fgen & EPV'], ['98ft', '925-850mb FGEN'], ['857f', '850-700mb FGEN'], 
-        ['75ft', '700-500mb FGEN'], ['vadv', '700-400mb Diff PVA'], ['padv', '400-250mb Pot Vort Adv'], ['ddiv', '850-250mb Diff Div'], 
-        ['ageo', '300mb Jet Circ'], ['500mb_chg', '12hr H5 chg'], ['trap_500', 'Fluid Trapping (H500)'], ['trap_250', 'Fluid Trapping (H250)']]
-
-        let thermodynamics = [['sbcp', 'SBCAPE'], ['mlcp', 'MLCAPE'], ['mucp', 'MUCAPE'], ['eltm', 'EL Temp/MUCAPE/MUCIN'], ['ncap', 'CAPE - Normalized'], 
-        ['dcape', 'CAPE - Downdraft'], ['muli', 'Sfc Based LI'], ['laps', 'Mid-Level Lapse Rates'], ['lllr', 'Low-Level Lapse Rates'], 
-        ['maxlr', 'Max 2-6 km AGL Lapse Rate'], ['lclh', 'LCL hght'], ['lfch', 'LFC hght'], ['lfrh', 'LCL-LFC RH'], 
-        ['sbcp_chg', '3-hour SBCAPE Change'], ['sbcn_chg', '3-hour SBCIN Change'], ['mlcp_chg', '3-hour MLCAPE Change'], 
-        ['mucp_chg', '3-hour MUCAPE Change'], ['lllr_chg', '3-hour Low LR Change'], ['laps_chg', '6-hour Mid LR Change'], 
-        ['skewt', 'Skew-T Maps']]
-
-        let wind_shear = [['eshr', 'Bulk Shear - Effective'], ['shr6', 'Bulk Shear - Sfc-6km'], ['shr8', 'Bulk Shear - Sfc-8km'], ['shr3', 'Bulk Shear - Sfc-3km'], 
-        ['shr1', 'Bulk Shear - Sfc-1km'], ['brns', 'BRN Shear'], ['effh', 'SR Helicity - Effective'], ['srh3', 'SR Helicity - Sfc-3km'], 
-        ['srh1', 'SR Helicity - Sfc-1km'], ['srh5', 'SR Helicity - Sfc-500m'], ['llsr', 'SR Wind - Sfc-2km'], ['mlsr', 'SR Wind - 4-6km'], 
-        ['ulsr', 'SR Wind - 9-11km'], ['alsr', 'SR Wind - Anvil Level'], ['mnwd', '850-300mb Mean Wind'], ['xover', '850 and 500mb Winds'], 
-        ['srh3_chg', '3hr Sfc-3km SR Helicity Change'], ['shr1_chg', '3hr Sfc-1km Bulk Shear Change'], ['shr6_chg', '3hr Sfc-6km Bulk Shear Change'], 
-        ['hodo', 'Hodograph Map']]
-
-        let composite_indices = [['scp', 'Supercell Composite'], ['stor', 'Sig Tor (fixed)'], ['stpc', 'Sig Tor (eff)'], ['stpc5', 'Sig Tor (0-500m SRH)'],
-        ['sigt1', 'Cond Prob SigTor 1'], ['sigt2', 'Cond Prob SigTor 2'], ['nstp', 'Non-Supercell Tor'], ['vtp3', 'Violent Tor Parm'],
-        ['sigh', 'Significant Hail'], ['sars1', 'SARS Hail Size'], ['sars2', 'SARS Hail %age'], ['lghl', 'Large Hail Parm'], ['dcp', 'Derecho Comp'],
-        ['cbsig', 'Craven/Brooks SigSvr'], ['brn', 'Bulk Ri Number'], ['mcsm', 'MCS Maint'], ['mbcp', 'Microburst Composite'], ['desp', 'Enh Stretch Pot'],
-        ['ehi1', 'EHI - Sfc-1km'], ['ehi3', 'EHI - Sfc-3km'], ['vgp3', 'VGP - Sfc-3km'], ['crit', 'Critical Angle']]
-
-        let multi_parameter_fields = [['mlcp_eshr', 'MLCAPE / Eff Shear'],['cpsh', 'MUCAPE / Eff Shear'], ['comp', 'MU LI / H8 & H5 Wind'], ['lcls', 'LCL Hgt / 0-1 SRH'],
-        ['lr3c', '0-3km Lapse Rate/MLCAPE'], ['3cape_shr3', '0-3km Bulk Shear/MLCAPE'], ['3cvr', 'Sfc Vort / 0-3km MLCAPE'], ['tdlr', 'Sfc Dwpt / H7-H5 LapseR'],
-        ['qlcs1', '0-3km ThetaE diff/Shear Vec & MUCAPE'], ['qlcs2', '', '0-3km ThetaE diff/Shear Vec & MLCAPE']]
-
-        let heavy_rain = [['pwtr', 'PWAT'], ['tran_925', '925 Moist Trans'], ['tran', '850 Moist Trans'], ['tran_925-850', '925-850 Mtrans'],
-        ['prop', 'Propagation Vec'], ['peff', 'Pcpn Potential'], ['mixr', '100mb Mean Mixing Ratio']]
-
-        let winter_weather = [['ptyp', 'Precipitation Type'], ['epvl', '800-750mb EPVg'], ['epvm', '650-500mb EPVg'], ['les1', 'Lake Effect Snow 1'],
-        ['les2', 'Lake Effect Snow 2'], ['snsq', 'Snow Squall Parameter'], ['dend', 'Dendritic Growth Layer Depth'], ['dendrh', 'Dendritic Growth Layer RH']]
-
-        let fire_weather = [ ['sfir', 'Sfc RH / T / Wind'], ['fosb', 'Fosberg Index'], ['lhan', 'Low Haines Index'], ['mhan', 'Mid Haines Index'], ['hhan', 'High Haines Index'],
-        ['lasi', 'Lower Atmos Severity Index']]
-
-        let classic = [['ttot', 'Total Totals'], ['show', 'Showalter Index'], ['kidx', 'K Index']]
-
-        let beta = [['sherbe', 'SHERBE'], ['moshe', 'Modified SHERBE'], ['cwasp', 'CWASP'], ['tehi', 'Tornadic 0-1 km EHI'], 
-        ['tts', 'Tornadic Tilting and Stretching parameter (TTS)'], ['ptstpe', 'Conditional probability of EF0+ tornadoes'], 
-        ['pstpe', 'Conditional probability of EF2+ tornadoes'], ['pvstpe', 'Conditional probability of EF4+ tornadoes']]
+        let spc_items = ['eshr', 'shr6', 'shr8', 'shr3', 'shr1', 'brns', 'effh', 'srh3', 'srh1', 'srh5', 'llsr',
+            'mlsr', 'ulsr', 'alsr', 'mnwd', 'xover', 'srh3_chg', 'shr1_chg', 'shr6_chg', 'hodo', 'sbcp', 'mlcp',
+            'mucp', 'eltm', 'ncap', 'dcape', 'laps', 'muli', 'lllr', 'maxlr', 'lclh', 'lcls', 'lfch', 'lfrh',
+            'sbcp_chg', 'sbcn_chg', 'mlcp_chg', 'mucp_chg', 'lllr_chg', 'laps_chg', 'skewt', 'ttot', 'show', 'kidx',
+            'hail', 'sars1', 'sars2', 'lghl', 'dcp', 'mbcp', 'qlcs1', 'qlcs2', 'scp', 'lscp', 'stor', 'stpc',
+            'stpc5', 'sigt1', 'sigt2', 'nstp', 'vtp3', 'sigh', 'cbsig', 'cpsh', 'vgp3',
+            'lcls', 'lr3c', '3cvr', '3cape_shr3', '925mb', '850mb', '850mb2', '700mb', '500mb', '300mb', 'tran',
+            'dlcp', 'tadv_925', 'tadv', '7tad', '9fnt', '8fnt', '7fnt', '857f', '75ft', '98ft', 'vadv', 'ageo',
+            'sfnt', '925f', '500mb_chg', 'nstp', 'cpsh', 'lr3c', 'pwtr', 'tran', 'prop', 'peff',
+            'tran_925', 'tran_925-850', 'bigsfc', 'pmsl', 'ttd', 'mcon', 'mxth', 'thea', 'thet', 'icon', 'trap',
+            'vtm', 'dvvr', 'def', 'sfnt', 'pchg', 'temp_chg', 'dwpt_chg', 'mixr_chg', 'thte_chg', '925mb', '850mb',
+            '700mb', '500mb', '300mb', 'tadv_925', 'tadv', '7tad', 'ddiv', 'padv', 'brn', 'desp', 'ehi1', 'ehi3',
+            'vgp3', 'crit', 'mlcape_eshr', 'comp', 'lcls', 'tdlr', 'mcsm', 'mbcp', 'sfir', 'fosb', 'lhan', 'mhan',
+            'hhan', 'lasi', 'trap_500', 'trap_250', 'sherbe', 'moshe', 'cwasp', 'tehi', 'tts', 'ptstpe', 'pstpe',
+            'pvstpe', 'snsq', 'ptyp', 'epvl', 'epvm', 'les1', 'les2', 'dend', 'dendrh'
+        ]
 
         spc_items.forEach(s => {
-            urls[s] = ma + s + '/' + s + '.gif'
+            //urls[s] = ma + s + '/' + s + '.gif'
+            urls[s] = s + '.gif'
         });
-
-
-        // let spc_items = ['eshr', 'shr6', 'shr8', 'shr3', 'shr1', 'brns', 'effh', 'srh3', 'srh1', 'srh5', 'llsr',
-        //     'mlsr', 'ulsr', 'alsr', 'mnwd', 'xover', 'srh3_chg', 'shr1_chg', 'shr6_chg', 'hodo', 'sbcp', 'mlcp',
-        //     'mucp', 'eltm', 'ncap', 'dcape', 'laps', 'muli', 'lllr', 'maxlr', 'lclh', 'lcls', 'lfch', 'lfrh',
-        //     'sbcp_chg', 'sbcn_chg', 'mlcp_chg', 'mucp_chg', 'lllr_chg', 'laps_chg', 'skewt', 'ttot', 'show', 'kidx',
-        //     'hail', 'sars1', 'sars2', 'lghl', 'dcp', 'mbcp', 'qlcs1', 'qlcs2', 'scp', 'lscp', 'stor', 'stpc',
-        //     'stpc5', 'sigt1', 'sigt2', 'nstp', 'vtp3', 'sigh', 'cbsig', 'cpsh', 'vgp3',
-        //     'lcls', 'lr3c', '3cvr', '3cape_shr3', '925mb', '850mb', '850mb2', '700mb', '500mb', '300mb', 'tran',
-        //     'dlcp', 'tadv_925', 'tadv', '7tad', '9fnt', '8fnt', '7fnt', '857f', '75ft', '98ft', 'vadv', 'ageo',
-        //     'sfnt', '925f', '500mb_chg', 'nstp', 'cpsh', 'lr3c', 'pwtr', 'tran', 'prop', 'peff',
-        //     'tran_925', 'tran_925-850', 'bigsfc', 'pmsl', 'ttd', 'mcon', 'mxth', 'thea', 'thet', 'icon', 'trap',
-        //     'vtm', 'dvvr', 'def', 'sfnt', 'pchg', 'temp_chg', 'dwpt_chg', 'mixr_chg', 'thte_chg', '925mb', '850mb',
-        //     '700mb', '500mb', '300mb', 'tadv_925', 'tadv', '7tad', 'ddiv', 'padv', 'brn', 'desp', 'ehi1', 'ehi3',
-        //     'vgp3', 'crit', 'mlcape_eshr', 'comp', 'lcls', 'tdlr', 'mcsm', 'mbcp', 'sfir', 'fosb', 'lhan', 'mhan',
-        //     'hhan', 'lasi', 'trap_500', 'trap_250', 'sherbe', 'moshe', 'cwasp', 'tehi', 'tts', 'ptstpe', 'pstpe',
-        //     'pvstpe', 'snsq', 'ptyp', 'epvl', 'epvm', 'les1', 'les2', 'dend', 'dendrh'
-        // ]
-
 
 
         /////////////////////////////////////////////////////////////
 
+        function soundingDate() {
+            // create a new timestamp 
+            var now = new Date();
+
+            var year = now.getUTCFullYear().toString().slice(-2)
+            var month = now.getUTCMonth() + 1;
+            monstr = month.toString();
+            if (monstr.length == 1) {
+                monstr = '0' + monstr;
+            }
+            var date = now.getUTCDate().toString();
+            if (date.length == 1) {
+                date = '0' + date
+            }
+            var hour = now.getUTCHours();
+            if (hour > 12) {
+                var hr = '12'
+            } else {
+                var hr = '00'
+            }
+
+            let dateString = year + monstr + date + hr + '_OBS/';
+            return dateString;
+        }
+
+        const sound = exper + 'soundings/'
+        let soundDate = soundingDate();
+
+        const soundings = ['UIL', 'OTX', 'SLE', 'MFR', 'BOI', 'TFX', 'GGW', 'RIW', 'SLC', 'LKN', 'REV', 'OAK', 'VEF',
+            'GJT', 'FGZ', 'NKW', 'TUS', 'ABQ', 'EPZ', 'DRT', 'MAF', 'AMA', 'OUN', 'DDC', 'TOP', 'LBF', 'OAX', 'RAP',
+            'ABR', 'BIS', 'INL', 'MPX', 'GRB', 'DVN', 'ILX', 'SGF', 'LZK', 'SHV', 'LCH', 'JAN', 'LIX', 'APX', 'DTX',
+            'ILN', 'BNA', 'BMX', 'FFC', 'BUF', 'PIT', 'EVW', 'MFL', 'TBW', 'JAX', 'CHS', 'MHX', 'GSC', 'RNK', 'PIT',
+            'IAG', 'WAL', 'OKX', 'ALB', 'GYX'
+        ]
+
+        soundings.forEach(sounding => {
+            urls[sounding] = sound + soundDate + sounding + '.gif'
+
+        })
         ////////////////////////////////////////////////////////////
 
         const images = document.querySelectorAll("div.image");
         const buttons = document.querySelectorAll("button");
         const dividers = document.querySelectorAll(".divider");
         const radios = document.querySelectorAll(".radio");
+        const radar_loops = ['rl-conus', 'rl-nw', 'rl-nr', 'rl-sr', 'rl-umv', 'rl-sp', 'rl-cgl', 'rl-ne', 'rl-se', 'rl-smv']
+        const sat_loops = ['ch02', 'ch07', 'ch08', 'ch13', 'ch14', 'geoc', 'airm', 'sand', 'nmic', 'dayp', 'firt']
+        const sat_images = ['ch01i', 'ch02i', 'ch03i', 'ch04i', 'ch05i', 'ch06i', 'ch07i', 'ch08i', 'ch09i', 'ch10i',
+            'ch11i', 'ch12i', 'ch13i', 'ch14i', 'ch15i', 'ch16i'
+        ]
+
+        const radar_loop_names = {
+            'rl-conus': 'CONUS-LARGE',
+            'rl-nw': 'PACNORTHWEST',
+            'rl-nr': 'NORTHROCKIES',
+            'rl-sr': 'SOUTHROCKIES',
+            'rl-umv': 'UPPERMISSVLY',
+            'rl-sp': 'SOUTHPLAINS',
+            'rl-cgl': 'CENTGRLAKES',
+            'rl-ne': 'NORTHEAST',
+            'rl-se': 'SOUTHEAST',
+            'rl-smv': 'SOUTHMISSVLY',
+            //'s18': 'smv',
+        }
+
+        const sat_loop_names = {
+            'ch02': '02',
+            'ch07': '07',
+            'ch08': '08',
+            'ch13': '13',
+            'ch14': '14',
+            'geoc': 'GEOCOLOR',
+            'airm': 'AirMass',
+            'sand': 'Sandwich',
+            'dayp': 'DayCloudPhase',
+            'nmic': 'NightMicrophysics',
+            'firt': 'FireTemperature'
+        }
+
+        const sat_sector = {
+            's11nw': 'pnw',
+            's11nr': 'nr',
+            's12sw': 'psw',
+            's12sr': 'sr',
+            's13': 'umv',
+            's20': 'umv',
+            's14': 'sp',
+            's15': 'sp',
+            's16gl': 'cgl',
+            's16ne': 'ne',
+            's17': 'se',
+            's18se': 'se',
+            's18smv': 'smv',
+            's21gl': 'cgl',
+            //'s18': 'smv',
+        }
+
 
         function getImage(e) {
             reference_id = e.target.id
@@ -641,6 +774,29 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             spc_items.forEach(s => {
                 urls[s] = ma_base + m_sector + '/' + s + '/' + s + '.gif'
             });
+            sat_images.forEach(image => {
+                let channel = image.slice(2, -1);
+                urls[image] = sat + sat_sector_name_upper + '/' + channel + '/600x600.jpg';
+            });
+
+            sat_loops.forEach(loop => {
+                let loop_name = sat_loop_names[loop];
+                urls[loop] = sat + sat_sector_name_upper + '/' + loop_name + '/GOES16-' +
+                    sat_sector_name_upper + '-' + loop_name + '-600x600.gif';
+            });
+
+            urls['glm'] = 'https://cdn.star.nesdis.noaa.gov/GOES16/GLM/SECTOR/' + sat_sector_name +
+                '//EXTENT3/GOES16-' + sat_sector_name_upper + '-EXTENT3-600x600.gif';
+
+        };
+
+
+        radar_loops.forEach(rl => {
+                let rl_name = radar_loop_names[rl];
+                urls[rl] = 'https://radar.weather.gov/ridge/lite/' + rl_name + '_loop.gif';
+                console.log(urls[rl]);
+            });
+
 
         for (const radio of radios) {
             radio.addEventListener('change', showSelected);
@@ -1403,6 +1559,69 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
 
             // Satellite
 
+            'ch01i': '<div class="sat-prod">Visible - CH01 (0.47 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band01.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch02i': '<div class="sat-prod">Visible - CH02 (0.64 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band02.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch03i': '<div class="sat-prod">Veggie Band - CH03 (0.86 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band03.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch04i': '<div class="sat-prod">Cirrus Band - CH04 (1.37 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band04.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch05i': '<div class="sat-prod">Snow/Ice Band - CH05 (1.61 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band05.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch06i': '<div class="sat-prod">Cloud Particle Size Band - CH06 (2.24 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band05.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch07i': '<div class="sat-prod">Shortwave (Near) IR Band - CH07 (3.9 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band05.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch08i': '<div class="sat-prod">Upper Level Water Vapor - CH08 (6.2 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band08.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch09i': '<div class="sat-prod">Mid Level Water Vapor - CH09 (6.9 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band09.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch10i': '<div class="sat-prod">Mid Level Water Vapor - CH10 (7.3 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band10.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch11i': '<div class="sat-prod">Infrared Cloud Phase - CH11 (8.5 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band11.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+            
+            'ch12i': '<div class="sat-prod">Ozone Band - CH12 (9.6 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band12.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch13i': '<div class="sat-prod">Clean Longwave Infrared Window - CH13 (10.3 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band13.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch14i': '<div class="sat-prod">Infrared Longwave Window - CH14 (11.2 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band14.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch15i': '<div class="sat-prod">Dirty Window Band - CH15 (12.3 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band15.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'ch16i': '<div class="sat-prod">CO2 Band - CH16 (13.3 um)</div><div class="sat-info">Click <a \
+            href="http://cimss.ssec.wisc.edu/goes/OCLOFactSheetPDFs/ABIQuickGuide_Band16.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'geoci': '<div class="sat-prod">CIRA GeoColor RGB</div><div class="sat-info">Click <a \
+            href="https://rammb.cira.colostate.edu/training/visit/quick_guides/QuickGuide_CIRA_Geocolor_20171019.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'nmici': '<div class="sat-prod">Nighttime Microphysics RGB</div><div class="sat-info">Click <a \
+            href="https://rammb.cira.colostate.edu/training/visit/quick_guides/QuickGuide_GOESR_NtMicroRGB_Final_20191206.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'airmi': '<div class="sat-prod">Airmass RGB</div><div class="sat-info">Click <a \
+            href="https://rammb.cira.colostate.edu/training/visit/quick_guides/QuickGuide_GOESR_AirMassRGB_final.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'sandi': '<div class="sat-prod">Sandwich Product</div><div class="sat-info">Click <a \
+            href="https://www.star.nesdis.noaa.gov/goes/documents/SandwichProduct.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
+            'firti': '<div class="sat-prod">Fire Temperature RGB</div><div class="sat-info">Click <a \
+            href="https://rammb.cira.colostate.edu/training/visit/quick_guides/Fire_Temperature_RGB.pdf" target="_blank">HERE</a> to open quick guide pdf in another tab</div>',
+
         }
 
         //const sat_loops = ['ch02', 'ch07', 'ch08', 'ch13', 'ch14', 'geoc', 'airm', 'sand', 'nmic', 'dayp', 'firt']
@@ -1413,7 +1632,28 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
         descriptions['alsr'] = descriptions['ulsr']
         descriptions['mhan'] = descriptions['lhan']
         descriptions['hhan'] = descriptions['lhan']
-    }
+
+
+        descriptions['conus-ch02'] = descriptions['ch02i']
+        descriptions['sector-ch02'] = descriptions['ch02i']
+        descriptions['conus-ch07'] = descriptions['ch07i']
+        descriptions['sector-ch07'] = descriptions['ch07i']
+        descriptions['conus-ch08'] = descriptions['ch08i']
+        descriptions['sector-ch08'] = descriptions['ch08i']
+        descriptions['conus-ch13'] = descriptions['ch13i']
+        descriptions['sector-ch13'] = descriptions['ch13i']
+        descriptions['conus-ch14'] = descriptions['ch14i']
+        descriptions['sector-ch14'] = descriptions['ch14i']
+        descriptions['conus-geoc'] = descriptions['geoci']
+        descriptions['sector-geoc'] = descriptions['geoci']
+        descriptions['conus-airm'] = descriptions['airmi']
+        descriptions['sector-airm'] = descriptions['airmi']
+        descriptions['conus-sand'] = descriptions['sandi']
+        descriptions['sector-sand'] = descriptions['sandi']
+        descriptions['conus-nmic'] = descriptions['nmici']
+        descriptions['sector-nmic'] = descriptions['nmici']
+        descriptions['conus-firt'] = descriptions['firti']
+        descriptions['sector-firt'] = descriptions['firti']
     </script>
 </body>
 

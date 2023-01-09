@@ -1,26 +1,4 @@
-############################################################################
-# startDateTime: Date and time you want to start grabbing images for (yyyymmdd_hh)
-# endDateTime: Date and time you want to stop grabbing images for (inclusive [yyyymmdd_hh])
-# sector: SPC meso sector you wish to grab (number[string] only - see below)
-#
-# 11:NW
-# 12:SW
-# 13:N Plns
-# 14:C Plns
-# 15:S Plns
-# 16: NE
-# 17: EC
-# 18: SE
-# 19: National
-# 20: MW
-# 21: Great Lakes
-# 
-# parmKeys: What parameters you'd like to download imagery for. Note that using
-#           the string "ALL" downloads all configured imagery. Including a comma delimited
-#           list of keys corresponding to the spcDict accessed by running the following will
-#           only download those select parms.
-#           ./getSectorData -key        
-############################################################################
+
 
 surface = [
 ['pmsl', 'Pressure and Wind'], ['bigsfc', 'Surface Plot'], ['ttd', 'Temp/Wind/Dwpt'],
@@ -83,24 +61,34 @@ download_groups = [surface, upper_air, thermodynamics, wind_shear, composite_ind
 #Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
 
 from datetime import datetime,timedelta
-from time import strftime
 import urllib.request
 import os
-from pathlib import PurePath
 
-baseDir = "C:/data/events/"
+baseDir = "C:/data"
 spcDir = "https://www.spc.noaa.gov/exper/mesoanalysis/"
-
-startDateTime = "20220512_16"
-endDateTime = "20220513_04"
-sector = "13"
-parmKeys = "ALL"
 class GetMesoImages:
-    def __init__(self,startDateTime='20220512_16',endDateTime='20220512_16',sector='s13',parm_groups=[surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields]):
+    """
+    startDateTime
+            string: Date and hour to start grabbing images  - yyyymmdd_hh
+    endDateTime
+            string: Date and hour to stop grabbing images - yyyymmdd_hh
+    sector
+            2 digit integer: SPC meso sector to download
+                11:NW       12:SW       13:N Plns
+                14:C Plns   15:S Plns   16:NE
+                17:EC       18:SE       19:National
+                20:MW       21:Great Lakes
+    parm_groups
+            list of lists of strings. options are:
+                [surface, upper_air, thermodynamics, wind_shear, composite_indices,
+                multi_parameter_fields, heavy_rain, winter_weather, fire_weather, classic, beta]
+
+    """
+    def __init__(self,startDateTime,endDateTime,sector,parm_groups):
         self.startDateTime = startDateTime
         self.endDateTime = endDateTime
         self.date_hour_list = self.make_date_hour_list()
-        self.sector = sector
+        self.sector = 's' + sector
         self.urlpre = f'https://www.spc.noaa.gov/exper/mesoanalysis/s{self.sector}'
         self.parm_groups = parm_groups
         self.graphics_list = self.make_graphics_list()
@@ -120,19 +108,27 @@ class GetMesoImages:
         graphics_list = []
         for g in self.parm_groups:
             for e in g:
-                graphics_list.append(e)
+                graphics_list.append(e[0])
         return graphics_list
 
     def download_and_store_images(self):
         for dt in self.date_hour_list:
-            imagePath = PurePath(baseDir).joinpath(dt,self.sector)
-            PurePath.mkdir(imagePath,exist_ok=False)
-            # mkdir baseDir + dt + self.sector
+            imageDir = os.path.join(baseDir,dt)
+            try:
+                if not os.path.exists(imageDir):
+                    os.mkdir(imageDir)
+                
+            except:
+                print(f"Can't make {imageDir}")
+
             for gr in self.graphics_list:
                 #Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
                 source_filename = f'{gr}_{dt}.gif'
+                dest_filename = f'{gr}.gif'
                 fullURL = f'{spcDir}{self.sector}/{gr}/{source_filename}'
-                destination_filepath = PurePath(imagePath).joinpath(f'{gr}.gif')
+                print(fullURL)
+                destination_filepath = os.path.join(imageDir,dest_filename)
+                print(destination_filepath)
                 try:
                     opener = urllib.request.build_opener()
                     opener.addheaders = [('User-agent', 'Mozilla/5.0')]
@@ -143,7 +139,8 @@ class GetMesoImages:
         return
 
 
-# instantiate class
+# --------------------------------------------------------------------------------------
+# Instantiate class
+# --------------------------------------------------------------------------------------
 
-test = GetMesoImages()
-
+test = GetMesoImages('20221112_16','20221112_17','16',[surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields])
