@@ -4,7 +4,7 @@
 <!--
 -----------------------------------------------------------------------------
 12/12/2022 - Version 1.04
-Added SPC sector 21 (Westerm Great Lakes)
+Added SPC sector 21 (Western Great Lakes)
 Added SPC sector 20 (Midwest)
 
 please email thomas.turnage@noaa.gov for bug reports or suggestions
@@ -38,7 +38,6 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             padding: 0.05rem;
             border-radius: 5px;
             min-height: 1.8rem;
-
         }
 
         .time {
@@ -167,12 +166,11 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             text-decoration: none;
         }
     </style>
-    <title>Mesoanalysis</title><br>
+    <title>Archive SPC MesoA</title><br>
 </head>
 
 <body>
     <div class="container stretch">
-
         <div class="justify-content-center text-center">
             <button type="button" class="btn btn-outline-danger btn-sm" id="surface">Sfc</button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="upper">Upper</button>
@@ -180,6 +178,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             <button type="button" class="btn btn-outline-danger btn-sm" id="ma-shear">Shear</button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="ma-composite">Comp</button>
             <button type="button" class="btn btn-outline-danger btn-sm" id="ma-multiparm">Multi</button>
+            <!-- <button type="button" class="btn btn-primary" id="swody3">swody3</button> -->
             <button type="button" class="btn btn-outline-success btn-sm" id="wpc">Precip</button>
             <button type="button" class="btn btn-outline-success btn-sm" id="ma-fire">Fire</button>
             <button type="button" class="btn btn-outline-success btn-sm" id="ma-winter">Winter</button>
@@ -494,6 +493,213 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
                 </div>
             </div>
 
+            <div class="divider" id="section_sounding">
+                <div class="row">
+                    <div class="col-sm-1 image" id="ABQ">ABQ</div>
+                    <div class="col-sm-1 image" id="ABR">ABR</div>
+                    <div class="col-sm-1 image" id="ALY">ALY</div>
+                    <div class="col-sm-1 image" id="AMA">AMA</div>
+                    <div class="col-sm-1 image" id="APX">APX</div>
+                    <div class="col-sm-1 image" id="BIS">BIS</div>
+                    <div class="col-sm-1 image" id="BMX">BMX</div>
+                    <div class="col-sm-1 image" id="BNA">BNA</div>
+                    <div class="col-sm-1 image" id="BOI">BOI</div>
+                    <div class="col-sm-1 image" id="BRO">BRO</div>
+                    <div class="col-sm-1 image" id="BUF">BUF</div>
+                    <div class="col-sm-1 image" id="CAR">CAR</div>
+                    <div class="col-sm-1 image" id="CHH">CHH</div>
+                    <div class="col-sm-1 image" id="CHS">CHS</div>
+                    <div class="col-sm-1 image" id="CRP">CRP</div>
+                    <div class="col-sm-1 image" id="DDC">DDC</div>
+                    <div class="col-sm-1 image" id="DNR">DNR</div>
+                    <div class="col-sm-1 image" id="DRT">DRT</div>
+                    <div class="col-sm-1 image" id="DTX">DTX</div>
+                    <div class="col-sm-1 image" id="DVN">DVN</div>
+                    <div class="col-sm-1 image" id="EPZ">EPZ</div>
+                    <div class="col-sm-1 image" id="EYW">EYW</div>
+                    <div class="col-sm-1 image" id="FFC">FFC</div>
+                    <div class="col-sm-1 image" id="FGZ">FGZ</div>
+                    <div class="col-sm-1 image" id="FWD">FWD</div>
+                    <div class="col-sm-1 image" id="GGW">GGW</div>
+                    <div class="col-sm-1 image" id="GJT">GJT</div>
+                    <div class="col-sm-1 image" id="GRB">GRB</div>
+                    <div class="col-sm-1 image" id="GSO">GSO</div>
+                    <div class="col-sm-1 image" id="GYX">GYX</div>
+                    <div class="col-sm-1 image" id="IAG">IAG</div>
+                    <div class="col-sm-1 image" id="ILN">ILN</div>
+                    <div class="col-sm-1 image" id="ILX">ILX</div>
+                    <div class="col-sm-1 image" id="INL">INL</div>
+                    <div class="col-sm-1 image" id="JAN">JAN</div>
+                    <div class="col-sm-1 image" id="JAX">JAX</div>
+                    <div class="col-sm-1 image" id="LBF">LBF</div>
+                    <div class="col-sm-1 image" id="LCH">LCH</div>
+                    <div class="col-sm-1 image" id="LIX">LIX</div>
+                    <div class="col-sm-1 image" id="LKN">LKN</div>
+                    <div class="col-sm-1 image" id="LZK">LZK</div>
+                    <div class="col-sm-1 image" id="MAF">MAF</div>
+                    <div class="col-sm-1 image" id="MFL">MFL</div>
+                    <div class="col-sm-1 image" id="MFR">MFR</div>
+                    <div class="col-sm-1 image" id="MHX">MHX</div>
+                    <div class="col-sm-1 image" id="MPX">MPX</div>
+                    <div class="col-sm-1 image" id="NKX">NKX</div>
+                    <div class="col-sm-1 image" id="OAK">OAK</div>
+                    <div class="col-sm-1 image" id="OAX">OAX</div>
+                    <div class="col-sm-1 image" id="OKX">OKX</div>
+                    <div class="col-sm-1 image" id="OTX">OTX</div>
+                    <div class="col-sm-1 image" id="OUN">OUN</div>
+                    <div class="col-sm-1 image" id="PBZ">PBZ</div>
+                    <div class="col-sm-1 image" id="REV">REV</div>
+                    <div class="col-sm-1 image" id="RIW">RIW</div>
+                    <div class="col-sm-1 image" id="RNK">RNK</div>
+                    <div class="col-sm-1 image" id="SGF">SGF</div>
+                    <div class="col-sm-1 image" id="SHV">SHV</div>
+                    <div class="col-sm-1 image" id="SLC">SLC</div>
+                    <div class="col-sm-1 image" id="SLE">SLE</div>
+                    <div class="col-sm-1 image" id="TAE">TAE</div>
+                    <div class="col-sm-1 image" id="TBW">TBW</div>
+                    <div class="col-sm-1 image" id="TFX">TFX</div>
+                    <div class="col-sm-1 image" id="TOP">TOP</div>
+                    <div class="col-sm-1 image" id="TUS">TUS</div>
+                    <div class="col-sm-1 image" id="UIL">UIL</div>
+                    <div class="col-sm-1 image" id="UNR">UNR</div>
+                    <div class="col-sm-1 image" id="VEF">VEF</div>
+                    <div class="col-sm-1 image" id="WAL">WAL</div>
+                </div>
+            </div>
+
+            <div class="divider" id="section_radar">
+                <div class="row">
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-conus">CONUS</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-se">Southeast US</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-nw">Northwest US</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-sr">Southern Rockies</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-nr">Northern Rockies</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-umv">Upper MS Valley</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-smv">Southern MS Valley</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-sp">Southern Plains</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-cgl">Central Great Lakes</div>
+                    <div class="col-sm-2 image sector-radar-loop nr" id="rl-ne">Northeast US</div>
+                </div>
+            </div>
+
+
+            <div class="divider" id="section_satellite">
+                <div class="row">
+                    <div class="col-sm-2 image us-loop" id="conus-ch02">CONUS Vis</div>
+                    <div class="col-sm-2 image us-loop" id="conus-ch13">CONUS Clean IR</div>
+                    <div class="col-sm-2 image us-loop" id="conus-sand">CONUS Sandwich</div>
+                    <div class="col-sm-2 image us-loop" id="conus-ch08">CONUS Upper WV</div>
+                    <div class="col-sm-2 image us-loop" id="conus-geoc">CONUS GeoColor</div>
+                    <div class="col-sm-2 image us-loop" id="conus-airm">CONUS Airmass</div>
+
+                    <div class="col-sm-2 image sector-loop" id="ch02">Sector Vis</div>
+                    <div class="col-sm-2 image sector-loop" id="ch13">Sector Clean IR</div>
+                    <div class="col-sm-2 image sector-loop" id="sand">Sector Sandwich</div>
+                    <div class="col-sm-2 image sector-loop" id="ch08">Sector Upper WV</div>
+                    <div class="col-sm-2 image sector-loop" id="geoc">Sector GeoColor</div>
+                    <div class="col-sm-2 image sector-loop" id="airm">Sector Airmass</div>
+
+                    <div class="col-sm-2 image" id="ch02i">CH02</div>
+                    <div class="col-sm-2 image" id="ch13i">CH13</div>
+                    <div class="col-sm-2 image us-loop" id="cint">Conv Init (image)</div>
+                    <div class="col-sm-2 image" id="ch08i">CH08</div>
+                    <div class="col-sm-2 image" id="ch09i">CH09</div>
+                    <div class="col-sm-2 image" id="ch10i">CH10</div>
+                    <div class="col-sm-2 image us-loop" id="conus-glm">CONUS GLM</div>
+                    <div class="col-sm-2 image us-loop" id="conus-ch07">CONUS Near IR</div>
+                    <div class="col-sm-2 image us-loop" id="conus-dayp">CONUS Day Phase</div>
+
+
+                    <div class="col-sm-2 image us-loop" id="conus-nmic">CONUS Night Micro</div>
+                    <div class="col-sm-2 image us-loop" id="conus-firt">CONUS Fire Temp</div>
+                    <div class="col-sm-2 image" id="ch14i">CH14</div>
+                    <div class="col-sm-2 image sector-loop" id="glm">Sector GLM</div>
+
+                    <div class="col-sm-2 image sector-loop" id="ch07">Sector Near IR</div>
+                    <div class="col-sm-2 image sector-loop" id="dayp">Sector Day Phase</div>
+                    <div class="col-sm-2 image" id="ch01i">CH01</div>
+                    <div class="col-sm-2 image" id="ch03i">CH03</div>
+                    <div class="col-sm-2 image" id="ch04i">CH04</div>
+                    <div class="col-sm-2 image" id="ch05i">CH05</div>
+                    <div class="col-sm-2 image" id="ch06i">CH06</div>
+                    <div class="col-sm-2 image" id="ch07i">CH07</div>
+
+                    <div class="col-sm-2 image" id="ch11i">CH11</div>
+                    <div class="col-sm-2 image" id="ch12i">CH12</div>
+                    <div class="col-sm-2 image" id="ch15i">CH15</div>
+                    <div class="col-sm-2 image" id="ch16i">CH16</div>
+                </div>
+            </div>
+            <div class="divider" id="section_links">
+                <div class="row justify-content-left text-center">
+                    <div class="col-sm-2"><a href="http://autumnsky.us/vad/" target="_blank">VWP Hodographs</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://mrms.nssl.noaa.gov/qvs/product_viewer/"
+                            target="_blank">MRMS</a></div>
+                    <div class="col-sm-2"><a href="https://iris.ncep.noaa.gov" target="_blank">IRIS</a></div>
+                    <div class="col-sm-2"><a href="https://www.spc.noaa.gov/exper/href/" target="_blank">SPC HREF</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://www.spc.noaa.gov/exper/hrrr/" target="_blank">SPC HRRR</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://www.spc.noaa.gov/exper/sref/" target="_blank">SPC SREF</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://twitter.com/nadocast" target="_blank">NadoCast</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://www.tropicaltidbits.com/analysis/models/" target="_blank">Tropical Tidbits</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://www.pivotalweather.com/model.php" target="_blank">Pivotal</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://rapidrefresh.noaa.gov/hrrr/HRRR/Welcome.cgi?dsKey=hrrr_ncep_jet" target="_blank">GSD HRRR</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://www.spc.noaa.gov/exper/hrrr/sscram/index2.php"
+                            target="_blank">SSCRAM</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://cbwofs.nssl.noaa.gov/Forecast"
+                        target="_blank">WoFS</a>
+                </div>
+                    <div class="col-sm-2"><a href="https://www.eas.slu.edu/CIPS/SVRprob/SVRprob.php"
+                            target="_blank">CIPS Severe Analogs</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://schumacher.atmos.colostate.edu/hilla/csu_mlp/index.php"
+                            target="_blank">CSU ML Svr Probs</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://ncar.github.io/modeview/" target="_blank">NCAR HRRR Storm
+                            Mode</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://www.spc.noaa.gov/exper/reports/" target="_blank">Interactive
+                            LSRs</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://cimss.ssec.wisc.edu/severe_conv/psv3.html"
+                            target="_blank">ProbSevere3</a>
+                    </div>
+                    <div class="col-sm-2"><a href="https://cimss.ssec.wisc.edu/severe_conv/pltg.html"
+                            target="_blank">LightningCast</a>
+                    </div>
+                    <div class="col-sm-2"><a href="http://arctic.som.ou.edu/tburg/products/R2O/torprob/"
+                            target="_blank">Tor Prob</a>
+                    </div>
+                    <div class="col-sm-2"><a
+                            href="https://www.lightningmaps.org/?lang=en#t=3;s=0;o=0;b=;ts=0;m=oss;y=40.8162;x=-93.6011;z=6;d=2;dl=2;dc=0"
+                            target="_blank">Ltg Maps</a>
+                    </div>
+                    <div class="col-sm-2"><a
+                            href="https://rammb-slider.cira.colostate.edu/?sat=goes-16&z=3&im=12&ts=1&st=0&et=0&speed=130&motion=loop&map=1&lat=0&opacity%5B0%5D=1&hidden%5B0%5D=0&pause=0&slider=-1&hide_controls=0&mouse_draw=0&follow_feature=0&follow_hide=0&s=rammb-slider&sec=conus&p%5B0%5D=cira_glm_l2_group_counts&x=5056&y=3129"
+                            target="_blank">GLM</a>
+                    </div>
+                    <div class="col-sm-2"><a
+                            href="https://sites.google.com/view/nws-acars-sounding-page/acars-national-page"
+                            target="_blank">ACARS Sounding</a>
+                    </div>
+                    <div class="col-sm-2"><a
+                            href="https://noaa.maps.arcgis.com/apps/opsdashboard/index.html#/c6b6620afa4844fe977bc662e63b0949?"
+                            target="_blank">HydroViewer AGOL</a>
+                    </div>
+                    <div class="col-sm-2"><a
+                            href="https://noaa.maps.arcgis.com/apps/opsdashboard/index.html#/51dd128593384741a90b9a63609c2394"
+                            target="_blank">IDSS Dashboard</a>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -502,7 +708,7 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
         <div class="d-flex justify-content-center text-center">
             <div class="row fit">
                 <img id="display-image" class="img-fluid display-image"
-                    src="https://www.spc.noaa.gov/products/outlook/day1otlk.gif">
+                    src="pmsl.gif">
             </div>
         </div>
     </div>
@@ -528,16 +734,60 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
         const day1prob = spc_out + 'day1probotlk_'
         const day2prob = spc_out + 'day2probotlk_'
 
-        // We're viewing images in the same directory that this html document resides, so don't need to create a URL
-        //let ma_sector = 's21'
-        //const exper = 'http://www.spc.noaa.gov/exper/'
-        //let ma_base = exper + 'mesoanalysis/'
-        //let ma = ma_base + ma_sector + '/'
+        let ma_sector = 's21'
+        const exper = 'http://www.spc.noaa.gov/exper/'
+        let ma_base = exper + 'mesoanalysis/'
+        let ma = ma_base + ma_sector + '/'
 
         const wpc_qpf = 'http://www.wpc.ncep.noaa.gov/qpf/'
         const sat = 'https://cdn.star.nesdis.noaa.gov//GOES16/ABI/SECTOR/';
         const sat_conus = 'https://cdn.star.nesdis.noaa.gov//GOES16/ABI/CONUS/'
         let urls = {
+            'conus-glm': 'https://cdn.star.nesdis.noaa.gov/GOES16/GLM/CONUS/EXTENT3/GOES16-CONUS-EXTENT3-625x375.gif',
+            'conus-geoc': sat_conus + 'GEOCOLOR/GOES16-CONUS-GEOCOLOR-625x375.gif',
+            'conus-airm': sat_conus + 'AirMass/GOES16-CONUS-AirMass-625x375.gif',
+            'conus-sand': sat_conus + 'Sandwich/GOES16-CONUS-Sandwich-625x375.gif',
+            'conus-dayp': sat_conus + 'DayCloudPhase/GOES16-CONUS-DayCloudPhase-625x375.gif',
+            'conus-nmic': sat_conus + 'NightMicrophysics/GOES16-CONUS-NightMicrophysics-625x375.gif',
+            'conus-firt': sat_conus + 'FireTemperature/GOES16-CONUS-FireTemperature-625x375.gif',
+            'conus-ch02': sat_conus + '02/GOES16-CONUS-02-625x375.gif',
+            'conus-ch07': sat_conus + '07/GOES16-CONUS-07-625x375.gif',
+            'conus-ch08': sat_conus + '08/GOES16-CONUS-08-625x375.gif',
+            'conus-ch13': sat_conus + '13/GOES16-CONUS-13-625x375.gif',
+            'glm': 'https://cdn.star.nesdis.noaa.gov/GOES16/GLM/SECTOR/cgl/EXTENT3/GOES16-CGL-EXTENT3-600x600.gif',
+            'ch02': sat + 'CGL/02/GOES16-CGL-02-600x600.gif',
+            'ch07': sat + 'CGL/07/GOES16-CGL-07-600x600.gif',
+            'ch08': sat + 'CGL/08/GOES16-CGL-08-600x600.gif',
+            'ch13': sat + 'CGL/13/GOES16-CGL-13-600x600.gif',
+            'ch14': sat + 'CGL/14/GOES16-CGL-14-600x600.gif',
+            'ch07': sat + 'CGL/07/GOES16-CGL-07-600x600.gif',
+            'geoc': sat + 'CGL/GEOCOLOR/GOES16-CGL-GEOCOLOR-600x600.gif',
+            'airm': sat + 'CGL/AirMass/GOES16-CGL-AirMass-600x600.gif',
+            'sand': sat + 'CGL/Sandwich/GOES16-CGL-Sandwich-600x600.gif',
+            'dayp': sat + 'CGL/DayCloudPhase/GOES16-ABI-CGL-DayCloudPhase-600x600.gif',
+            'nmic': sat + 'CGL/NightMicrophysics/GOES16-CGL-NightMicrophysics-600x600.gif',
+            'geoci': sat + 'CGL/GEOCOLOR/GOES16-CGL-GEOCOLOR-600x600.gif',
+            'airmi': sat + 'CGL/AirMass/GOES16-CGL-AirMass-600x600.gif',
+            'sandi': sat + 'CGL/Sandwich/600x600.jpg',
+            'dmici': sat + 'CGL/DayCloudPhase/600x600.jpg',
+            'nmici': sat + 'CGL/NightMicrophysics/600x600.jpg',
+            'ch01i': sat + 'CGL/01/600x600.jpg',
+            'ch02i': sat + 'CGL/02/600x600.jpg',
+            'ch03i': sat + 'CGL/03/600x600.jpg',
+            'ch04i': sat + 'CGL/04/600x600.jpg',
+            'ch05i': sat + 'CGL/05/600x600.jpg',
+            'ch06i': sat + 'CGL/06/600x600.jpg',
+            'ch07i': sat + 'CGL/07/600x600.jpg',
+            'ch08i': sat + 'CGL/08/600x600.jpg',
+            'ch09i': sat + 'CGL/09/600x600.jpg',
+            'ch10i': sat + 'CGL/10/600x600.jpg',
+            'ch11i': sat + 'CGL/11/600x600.jpg',
+            'ch12i': sat + 'CGL/12/600x600.jpg',
+            'ch13i': sat + 'CGL/13/600x600.jpg',
+            'ch14i': sat + 'CGL/14/600x600.jpg',
+            'ch15i': sat + 'CGL/15/600x600.jpg',
+            'ch16i': sat + 'CGL/16/600x600.jpg',
+            'rpts': 'https://www.spc.noaa.gov/climo/reports/today.gif',
             'dy1_otlk': spc_out + 'day1otlk.gif',
             'dy1_hail': day1prob + 'hail.gif',
             'dy1_wind': day1prob + 'wind.gif',
@@ -577,6 +827,24 @@ please email thomas.turnage@noaa.gov for bug reports or suggestions
             'dy2_1730_wind': spc_out + 'day2probotlk_1730_wind_prt.gif',
             'dy2_hail': spc_out + 'day2probotlk_hail.gif',
             'dy2_wind': spc_out + 'day2probotlk_wind.gif',
+            'dy1_qpf': wpc_qpf + 'fill_94qwbg.gif',
+            'dy2_qpf': wpc_qpf + 'fill_98qwbg.gif',
+            'dy3_qpf': wpc_qpf + 'fill_99qwbg.gif',
+            'dy45_qpf': wpc_qpf + '95ep48iwbg_fill.gif',
+            'dy67_qpf': wpc_qpf + '97ep48iwbg_fill.gif',
+            'dy12_qpf': wpc_qpf + 'd12_fill.gif',
+            'dy13_qpf': wpc_qpf + 'd13_fill.gif',
+            'dy15_qpf': wpc_qpf + 'p120i.gif',
+            'dy17_qpf': wpc_qpf + 'p168i.gif',
+            'dy1_exp': wpc_qpf + '94ewbg.gif',
+            'dy2_exp': wpc_qpf + '98ewbg.gif',
+            'dy3_exp': wpc_qpf + '99ewbg.gif',
+            'md_exp': 'https://www.wpc.ncep.noaa.gov/metwatch/latest_mdmap.gif',
+            'hr61_qpf': wpc_qpf + 'fill_91ewbg.gif',
+            'hr62_qpf': wpc_qpf + 'fill_92ewbg.gif',
+            'hr63_qpf': wpc_qpf + 'fill_93ewbg.gif',
+            'hr64_qpf': wpc_qpf + 'fill_9eewbg.gif',
+            'hr65_qpf': wpc_qpf + 'fill_9fewbg.gif',
             's-watch': spc_prods + 'watch/validww.png',
             's-mds': spc_prods + 'md/validmd.gif',
             'cint': 'https://www.nsstc.uah.edu/SATCAST/goes-east_fulldomain/UAH_SATCASTv3_CI_VIS.png'

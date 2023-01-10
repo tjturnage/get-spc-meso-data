@@ -57,7 +57,7 @@ beta = [['sherbe', 'SHERBE'], ['moshe', 'Modified SHERBE'], ['cwasp', 'CWASP'],
 #######################################################################################################################
 # Set directory in which image directories and images will be created
 #--------------------------------------------------------------------
-baseDir = "C:/data"
+baseDir = "C:/data/events"
 #--------------------------------------------------------------------
 
 from datetime import datetime,timedelta
@@ -116,13 +116,16 @@ class GetMesoImages:
             # create an image directory for each hour being downloaded
             imageDir = os.path.join(baseDir,dt)
             # copy meso graphics html browser into this new directory
-            shutil.copy2('/src/file.ext', '/dst/dir') # target filename is /dst/dir/file.ext
+            src = os.path.join(os.getcwd(),'spc_meso_graphics_viewer.html')
             try:
                 if not os.path.exists(imageDir):
                     os.mkdir(imageDir)                
             except:
-                print(f"Can't make {imageDir}")
-
+                print(f'Can not make {imageDir}')
+            try:
+                shutil.copy2(src,imageDir)       
+            except:
+                print(f'Can not copy html file')
             for gr in self.graphics_list:
                 #Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
                 source_filename = f'{gr}_{dt}.gif'
@@ -138,7 +141,8 @@ class GetMesoImages:
                     urllib.request.install_opener(opener)
                     urllib.request.urlretrieve(fullURL,destination_filepath)
                 except Exception as e:
-                    print(f'{source_filename} plot not available')
+                    print(f'could not download {source_filename}')
+                
         return
 
 
@@ -149,10 +153,4 @@ class GetMesoImages:
 #groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields, heavy_rain, winter_weather, fire_weather, classic, beta]
 groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields, heavy_rain, winter_weather]
 
-test = GetMesoImages('20221223_16','20221223_17','21',groups)
-
-
-#print(os.getcwd())
-#src = os.path.join(os.getcwd(),'meso_graphics_browser.html')
-#dst = "C:/data"
-#shutil.copy2(src,dst)
+test = GetMesoImages('20221223_16','20221223_18','21',groups)
