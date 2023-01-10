@@ -1,5 +1,7 @@
-# getSectorData.py #
-   
+# getSectorData.py #  
+## *Thanks to Donal Harrigan for some of this code* ##   
+------------------------------------------------------   
+--   
 ## Script creates directories for each valid hour. For example: ##  
 > ### {Base Directory}/22122318 ###  
 ------------------------------------------------------   
