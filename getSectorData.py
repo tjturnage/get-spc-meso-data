@@ -64,14 +64,12 @@ from datetime import datetime,timedelta
 import urllib.request
 import os
 import shutil
-
-spcDir = "https://www.spc.noaa.gov/exper/mesoanalysis/"
 class GetMesoImages:
     """
-    startDateTime
-            string: Date and hour to start grabbing images  - yyyymmdd_hh
-    endDateTime
-            string: Date and hour to stop grabbing images - yyyymmdd_hh
+    startingDateHour
+            string: Date and Hour to start grabbing images -- yyyymmdd_hh
+    total_hours
+            int: number of hours from startingDateHour to grab images
     sector
             2 digit string (not integer) representing SPC meso sector to download
                 11:NW       12:SW           13:N Plns
@@ -82,27 +80,39 @@ class GetMesoImages:
             list of lists of strings. options are:
                 [surface, upper_air, thermodynamics, wind_shear, composite_indices,
                 multi_parameter_fields, heavy_rain, winter_weather, fire_weather, classic, beta]
+    locBool
+            True: if obtaining images from a case requested of SPC
+                    -https://www.spc.noaa.gov/exper/mesoanalysis/archive/
+            False: if searching to see if images for a date already exist in their main directory
+                    -https://www.spc.noaa.gov/exper/mesoanalysis/
     """
 
-    def __init__(self,startDateTime,endDateTime,sector,parm_groups):
-        self.startDateTime = startDateTime
-        self.endDateTime = endDateTime
+    def __init__(self,startDateHour,total_hours,sector,parm_groups,locBool):
+        self.startDateHour = startDateHour
+        self.total_hours = total_hours
         self.date_hour_list = self.make_date_hour_list()
         self.sector = 's' + sector
-        self.urlpre = f'https://www.spc.noaa.gov/exper/mesoanalysis/s{self.sector}'
         self.parm_groups = parm_groups
+        self.locBool = locBool
+        self.urlpre = self.set_url_pre()
         self.graphics_list = self.make_graphics_list()
         self.download_and_store_images()
 
     def make_date_hour_list(self):
         dateList = []
-        starting_datetime = datetime.strptime(self.startDateTime,"%Y%m%d_%H")
-        ending_datetime = datetime.strptime(self.endDateTime,"%Y%m%d_%H")
-        while starting_datetime <= ending_datetime:
-            dt_str = datetime.strftime(starting_datetime,'%y%m%d%H')
+        starting_dateHour = datetime.strptime(self.startDateHour,"%Y%m%d_%H")
+        ending_dateHour = starting_dateHour + timedelta(hours=self.total_hours)
+        while starting_dateHour <= ending_dateHour:
+            dt_str = datetime.strftime(starting_dateHour,'%y%m%d%H')
             dateList.append(dt_str)
-            starting_datetime = starting_datetime + timedelta(hours=1)
+            starting_dateHour = starting_dateHour + timedelta(hours=1)
         return dateList
+
+    def set_url_pre(self):
+        if self.locBool:
+            return f'https://www.spc.noaa.gov/exper/mesoanalysis/archive/'
+        else:
+            return f'https://www.spc.noaa.gov/exper/mesoanalysis/'
 
     def make_graphics_list(self):
         graphics_list = []
@@ -130,7 +140,7 @@ class GetMesoImages:
                 #Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
                 source_filename = f'{gr}_{dt}.gif'
                 dest_filename = f'{gr}.gif'
-                fullURL = f'{spcDir}{self.sector}/{gr}/{source_filename}'
+                fullURL = f'{self.urlpre}{self.sector}/{gr}/{source_filename}'
                 #print(fullURL)
                 # all downloaded files will be renamed to remove date and hour to standardize names
                 destination_filepath = os.path.join(imageDir,dest_filename)
@@ -153,4 +163,4 @@ class GetMesoImages:
 #groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields, heavy_rain, winter_weather, fire_weather, classic, beta]
 groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields, heavy_rain, winter_weather]
 
-test = GetMesoImages('20221223_16','20221223_18','21',groups)
+test = GetMesoImages('20221223_16',4,'21',groups)
