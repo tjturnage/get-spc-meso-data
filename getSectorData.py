@@ -1,24 +1,11 @@
 """
 gets data
 """
-#class GetMesoImages:
-
-
-    #def __init__(self,start_date_hour,total_hours,sector,parm_groups,location_bool):
-    #    """
-    #    initialize instance
-    #    """
-    #    self.start_date_hour = start_date_hour
-    #    self.total_hours = total_hours
-    #    self.sector = 's' + sector
-    #    self.parm_groups = parm_groups
-    #    self.location_bool = location_bool
 from datetime import datetime,timedelta
 import urllib.request
 import os
 import shutil
 import sys
-from dataclasses import dataclass
 surface = [
 ['pmsl', 'Pressure and Wind'], ['bigsfc', 'Surface Plot'], ['ttd', 'Temp/Wind/Dwpt'],
 ['thet', 'MSL Press/Theta-e/Wind'], ['mcon', 'Moisture Convergence'], ['thea', 'Theta-E Advection'],
@@ -93,12 +80,14 @@ beta = [['sherbe', 'SHERBE'], ['moshe', 'Modified SHERBE'], ['cwasp', 'CWASP'],
 ['ptstpe', 'Conditional probability of EF0+ tornadoes'],
 ['pstpe', 'Conditional probability of EF2+ tornadoes'], ['pvstpe', 'Conditional probability of EF4+ tornadoes']]
 
+
+
 #######################################################################################################################
 # Set directory in which image directories and images will be created
 #--------------------------------------------------------------------
 BASEDIR = "C:/data/events"
 #--------------------------------------------------------------------
-@dataclass
+
 class GetMesoImages:
     """
     start_date_hour
@@ -121,13 +110,17 @@ class GetMesoImages:
             False: if searching to see if images for a date already exist in their main directory
                     -https://www.spc.noaa.gov/exper/mesoanalysis/
     """
-    start_date_hour: str
-    total_hours: int
-    sector: str
-    parm_groups: list
-    location_bool: bool
-    #date_hour_list: list
-    #graphics_list: list
+    def __init__(self,start_date_hour,total_hours,sector,parm_groups,location_bool):
+        """
+        initialize instance
+        """
+        self.start_date_hour = start_date_hour
+        self.total_hours = total_hours
+        self.sector = 's' + sector
+        self.parm_groups = parm_groups
+        self.location_bool = location_bool
+        #self.date_hour_list = self.date_hour_list()
+        self.download_and_store_images()
 
     def sector_name(self) -> str:
         """
@@ -137,7 +130,9 @@ class GetMesoImages:
 
     def date_hour_list(self) -> list:
         """
-        use datetime to create list of strings representing date and hour
+        Returns a list of strings representing date and hour, generated using datetime.
+        The list starts from the start_date_hour specified during object initialization,
+        and continues for the number of hours specified by total_hours.
         """
         date_hour_list = []
         starting_datehour = datetime.strptime(self.start_date_hour,"%Y%m%d_%H")
@@ -146,8 +141,8 @@ class GetMesoImages:
             dt_str = datetime.strftime(starting_datehour,'%y%m%d%H')
             date_hour_list.append(dt_str)
             starting_datehour = starting_datehour + timedelta(hours=1)
-        print(self.date_hour_list)
-        return self.date_hour_list
+        print(date_hour_list)
+        return date_hour_list
 
     def url_pre(self) -> str:
         """
@@ -172,7 +167,10 @@ class GetMesoImages:
         download and store images
         Returns nothing
         """
-        for date_hour in self.date_hour_list:
+        if not isinstance(self.date_hour_list(), list):
+            print("date_hour_list is not a list")
+            return
+        for date_hour in self.date_hour_list():
             # create an image directory for each hour being downloaded
             image_dir = os.path.join(BASEDIR,date_hour)
             # copy meso graphics html browser into this new directory
@@ -182,72 +180,29 @@ class GetMesoImages:
                     os.mkdir(image_dir)
             except ValueError:
                 print(f'Can not make {image_dir}')
-            try:
-                shutil.copy2(src,image_dir)
-            except ValueError:
-                print('Can not copy html file')
-            for graphic in self.full_elements_list():
-                if isinstance(self.date_hour_list(), list):
-                    for date_hour in self.date_hour_list():
-                        # create an image directory for each hour being downloaded
-                        image_dir = os.path.join(BASEDIR,date_hour)
-                        # copy meso graphics html browser into this new directory
-                        src = os.path.join(os.getcwd(),'spc_meso_graphics_viewer.html')
-                        try:
-                            if not os.path.exists(image_dir):
-                                os.mkdir(image_dir)
-                        except ValueError:
-                            print(f'Can not make {image_dir}')
-                        try:
-                            shutil.copy2(src,image_dir)
-                        except ValueError:
-                            print('Can not copy html file')
-                        if isinstance(self.full_elements_list(), list):
-                            for graphic in self.full_elements_list():
-                                #Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
-                                source_filename = f'{graphic}_{date_hour}.gif'
-                                dest_filename = f'{graphic}.gif'
-                                full_url = f'{self.url_pre()}{self.sector_name()}/{graphic}/{source_filename}'
-                                #print(fullURL)
-                                # all downloaded files will be renamed to remove date and hour to standardize names
-                                destination_filepath = os.path.join(image_dir,dest_filename)
-                                #print(destination_filepath)
-                                try:
-                                    opener = urllib.request.build_opener()
-                                    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-                                    urllib.request.install_opener(opener)
-                                    urllib.request.urlretrieve(full_url,destination_filepath)
-                                except ValueError:
-                                    print(f'could not download {source_filename}')
-                else:
-                    print("date_hour_list is not a list")
-                #Example: https://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl_22102521.gif
-                source_filename = f'{graphic}_{date_hour}.gif'
-                dest_filename = f'{graphic}.gif'
-                full_url = f'{self.url_pre()}{self.sector_name()}/{graphic}/{source_filename}'
-                #print(fullURL)
-                # all downloaded files will be renamed to remove date and hour to standardize names
-                destination_filepath = os.path.join(image_dir,dest_filename)
-                #print(destination_filepath)
-                try:
-                    opener = urllib.request.build_opener()
-                    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-                    urllib.request.install_opener(opener)
-                    urllib.request.urlretrieve(full_url,destination_filepath)
-                except ValueError:
-                    print(f'could not download {source_filename}')
+            for group in self.parm_groups:
+                for element in group:
+                    graphic = element[0]
+                    source_filename = f'{graphic}_{date_hour}.gif'
+                    dest_filename = f'{graphic}.gif'
+                    full_url = f'{self.url_pre()}{self.sector}/{graphic}/{source_filename}'
+                    print(full_url)
+                    # all downloaded files will be renamed to remove date and hour to standardize names
+                    destination_filepath = os.path.join(image_dir,dest_filename)
+                    #print(destination_filepath)
+                    try:
+                        opener = urllib.request.build_opener()
+                        opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+                        urllib.request.install_opener(opener)
+                        urllib.request.urlretrieve(full_url,destination_filepath)
+                    except :
+                        print(f'could not download {source_filename}')
+                        pass
+            opener = urllib.request.build_opener()
+            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            urllib.request.install_opener(opener)
+            urllib.request.urlretrieve(full_url,destination_filepath)
 
-
-        def main() -> int:
-            """Echo the input arguments to standard output"""
-            #self.date_hour_list = self.date_hour_list()
-            self.download_and_store_images()
-
-            return 0
-
-
-        if __name__ == '__main__':
-            sys.exit(main())  # next section explains the use of sys.exit
 
 # --------------------------------------------------------------------------------------
 # Instantiate class
@@ -257,4 +212,4 @@ class GetMesoImages:
 groups = [surface, upper_air, thermodynamics, wind_shear, composite_indices, multi_parameter_fields,
 heavy_rain, winter_weather]
 
-test = GetMesoImages('20231003_16',4,'21',groups,True)
+test = GetMesoImages('20230824_21',6,'21',groups,False)
